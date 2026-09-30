@@ -62,7 +62,6 @@ function Stage() {
 
         <div
           className="absolute inset-x-0 bottom-[clamp(96px,16vh,150px)] px-6 md:px-12"
-          style={{ ["--accent-fg" as string]: "#ffffff", ["--accent-bg" as string]: "#c23b21" }}
         >
           <div className="flex max-w-[1100px] items-end gap-5">
             <motion.span

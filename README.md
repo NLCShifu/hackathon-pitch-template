@@ -13,10 +13,10 @@ npm run build && npm start
 ## Fill it in (≈10 minutes)
 
 1. Open **`story.config.ts`**. It is the only file you need to edit.
-2. Replace every `[BRACKETED PLACEHOLDER]`. Unfilled brackets show as black text on a yellow highlighter, so you can see what's left at a glance.
+2. Replace every `[BRACKETED PLACEHOLDER]` with your copy (brackets and all).
 3. Put images in `/public` and set `image: "/your-file.jpg"`. `.mp4` and `.webm` files play as muted loops.
 4. Set `finale.qrUrl` to your demo link and the QR code is generated for you.
-5. Optional: wrap words in `{curly braces}` to accent them on purpose: red text on white sections, a white-on-red chip on dark and blue ones.
+5. What turns yellow is set in one place: the `highlights` block at the top of `story.config.ts`. List the exact words per chapter (case-sensitive). Use `[]` for no yellow. When you rewrite a headline, update its phrase there too.
 
 ## File map
 
@@ -66,8 +66,8 @@ components/story/
 Palette: blue `#264ed0` · sky `#5dadeb` · yellow `#ffd301` · red `#c23b21` · charcoal `#333333` · black `#131313`, plus white. Tokens live in `app/globals.css`.
 
 - **Grounds:** black (arrival) → white (chapters 2–7) → blue (finale). Text flips between white and black to match.
-- **Yellow and sky are never text colours.** They are used as fills: placeholder highlights, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
-- Red, blue and charcoal carry text colour on white (counters, accents). On black or blue grounds, accents switch to white on a red chip.
+- **Yellow and sky are never text colours.** They are used as fills: the highlighter, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
+- Red, blue and charcoal carry text colour on white (the trade-off counters).
 
 ## Tuning
 

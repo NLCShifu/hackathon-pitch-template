@@ -117,8 +117,9 @@ body {
     white-space: nowrap;
   }
 
-  /* Unfilled [PLACEHOLDER]: black text on a yellow highlighter, readable on every ground. */
-  .ph {
+  /* Highlight: a deliberate design accent, black text on a yellow marker.
+     Which phrases get it is set in story.config.ts › highlights. */
+  .hl {
     color: var(--color-black);
     background: var(--color-yellow);
     padding: 0 0.07em;
@@ -126,34 +127,24 @@ body {
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
-  /* Inside animated headlines the highlight lives on the clip mask instead:
-     every chip is one line tall, and neighbouring chips join (.ph-join). */
-  .ph-mask {
+  /* Inside animated headlines the marker lives on the clip mask instead:
+     every chip is one line tall, and neighbouring chips join (.hl-join). */
+  .hl-mask {
     background: var(--color-yellow);
     color: var(--color-black);
     padding-inline: 0.13em;
   }
-  /* A placeholder word that follows another one slides left over the space. */
-  .ph-join {
+  /* A highlighted word that follows another one slides left over the space. */
+  .hl-join {
     margin-left: -0.2em;
   }
   /* Urbanist's space glyph is wider than Bricolage's condensed one. */
-  .t-caption .ph-join {
+  .t-caption .hl-join {
     margin-left: -0.3em;
   }
-  .ph-mask .ph {
+  .hl-mask .hl {
     background: none;
     padding: 0;
-  }
-  /* Deliberate {accent}: red text on white grounds, white-on-red chip on dark/blue ones
-     (StoryPage drives --accent-fg / --accent-bg with the ground). */
-  .accent {
-    color: var(--accent-fg, var(--color-red));
-    background: var(--accent-bg, transparent);
-    padding: 0 0.07em;
-    border-radius: 0.08em;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
   }
 
   /* ── Fixed background stack (Whisper `.story-ground`) ──────────────────── */

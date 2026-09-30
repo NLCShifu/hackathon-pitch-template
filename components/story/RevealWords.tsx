@@ -2,7 +2,7 @@
 
 import { motion, useTransform, type MotionStyle, type MotionValue, type Variants } from "framer-motion";
 import { bz, ease, staggerEach, usePrefersReducedMotion } from "./motion";
-import { PartSpan, toWords, type Word } from "./text";
+import { PartSpan, toWords, useHighlights, type Word } from "./text";
 
 type Tag = "h1" | "h2" | "h3" | "p" | "div";
 // All of these share the same prop surface; one type keeps the JSX checkable.
@@ -41,7 +41,7 @@ type Triggered = Common & {
  * or played once in view.
  */
 export function RevealWords(props: ScrollLinked | Triggered) {
-  const words = toWords(props.text);
+  const words = toWords(props.text, useHighlights());
   const Tag = props.as ?? "p";
   const reduced = usePrefersReducedMotion();
 
@@ -130,15 +130,15 @@ function ScrubWord({
 }
 
 /**
- * One clip mask per part, so a [placeholder] highlight sits on the mask box
+ * One clip mask per part, so a highlight sits on the mask box
  * itself: every chip is exactly one line tall and neighbouring placeholder
- * words join into one continuous marker bar (see `.ph-mask` in globals.css).
+ * words join into one continuous marker bar (see `.hl-mask` in globals.css).
  */
 function MaskedParts({ word, joinPrev, y, variants }: { word: Word; joinPrev: boolean; y?: MotionValue<string>; variants?: Variants }) {
   return (
     <>
       {word.map((part, j) => (
-        <span key={j} className={`word-mask ${part.kind === "ph" ? "ph-mask" : ""} ${j === 0 && joinPrev ? "ph-join" : ""}`}>
+        <span key={j} className={`word-mask ${part.kind === "hl" ? "hl-mask" : ""} ${j === 0 && joinPrev ? "hl-join" : ""}`}>
           <motion.span className="inline-block will-change-transform" style={y ? { y } : undefined} variants={variants}>
             <PartSpan part={part} />
           </motion.span>
@@ -148,9 +148,9 @@ function MaskedParts({ word, joinPrev, y, variants }: { word: Word; joinPrev: bo
   );
 }
 
-/** True for each word that continues a placeholder from the previous word. */
+/** True for each word that continues a highlight from the previous word. */
 function placeholderJoins(words: Word[]) {
-  return words.map((w, i) => i > 0 && w[0].kind === "ph" && words[i - 1][words[i - 1].length - 1].kind === "ph");
+  return words.map((w, i) => i > 0 && w[0].kind === "hl" && words[i - 1][words[i - 1].length - 1].kind === "hl");
 }
 
 function WordParts({ word }: { word: Word }) {

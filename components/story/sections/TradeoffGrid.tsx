@@ -64,7 +64,7 @@ function Card({ card, index, pass }: { card: (typeof story.tradeoffs.cards)[numb
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.9, delay: index * 0.12, ease: bz("power3Out") }}
-        className="border-hairline bg-surface text-ink [--accent-fg:#c23b21] [--accent-bg:transparent] flex min-h-[260px] flex-col rounded-[22px] border p-7 shadow-[0_30px_60px_-44px_#13131366] md:p-8"
+        className="border-hairline bg-surface text-ink flex min-h-[260px] flex-col rounded-[22px] border p-7 shadow-[0_30px_60px_-44px_#13131366] md:p-8"
       >
         <div className="flex items-baseline justify-between gap-4 font-mono">
           <span

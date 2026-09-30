@@ -1,32 +1,42 @@
-import { Fragment } from "react";
+"use client";
 
-export type Kind = "plain" | "ph" | "accent";
+import { createContext, Fragment, useContext, type ReactNode } from "react";
+
+export type Kind = "plain" | "hl";
 export type Part = { text: string; kind: Kind };
-/** A run of parts with no whitespace between them, e.g. `[THING]` + `.` */
+/** A run of parts with no whitespace between them, e.g. `THING` + `.` */
 export type Word = Part[];
 
-const TOKEN = /(\[[^\]]*\]|\{[^}]*\})/;
+/** Phrases to paint yellow in the current chapter (from `story.highlights`). */
+const HighlightContext = createContext<readonly string[]>([]);
 
-function segments(text: string): Part[] {
-  return text
-    .split(TOKEN)
-    .filter(Boolean)
-    .map((s) =>
-      s.startsWith("[")
-        ? { text: s, kind: "ph" }
-        : s.startsWith("{")
-          ? { text: s.slice(1, -1), kind: "accent" }
-          : { text: s, kind: "plain" },
-    );
+export function Highlights({ phrases, children }: { phrases: readonly string[]; children: ReactNode }) {
+  return <HighlightContext.Provider value={phrases}>{children}</HighlightContext.Provider>;
 }
 
-/** Splits copy into words while keeping [placeholder] / {accent} styling per piece. */
-export function toWords(text: string): Word[] {
+export function useHighlights() {
+  return useContext(HighlightContext);
+}
+
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** Splits text into plain and highlighted runs. Exact, case-sensitive matches; longest phrase wins. */
+function segments(text: string, phrases: readonly string[]): Part[] {
+  const list = phrases.filter(Boolean);
+  if (!list.length) return [{ text, kind: "plain" }];
+  const re = new RegExp(`(${[...list].sort((a, b) => b.length - a.length).map(escape).join("|")})`);
+  return text
+    .split(re)
+    .filter(Boolean)
+    .map((s): Part => ({ text: s, kind: list.includes(s) ? "hl" : "plain" }));
+}
+
+/** Splits copy into words while keeping highlight styling per piece. */
+export function toWords(text: string, phrases: readonly string[]): Word[] {
   const words: Word[] = [];
   let current: Word = [];
-  for (const seg of segments(text)) {
-    const pieces = seg.text.split(/(\s+)/);
-    for (const piece of pieces) {
+  for (const seg of segments(text, phrases)) {
+    for (const piece of seg.text.split(/(\s+)/)) {
       if (!piece) continue;
       if (/^\s+$/.test(piece)) {
         if (current.length) words.push(current);
@@ -45,11 +55,12 @@ export function PartSpan({ part }: { part: Part }) {
   return <span className={part.kind}>{part.text}</span>;
 }
 
-/** Static render with placeholder / accent highlighting. */
+/** Static text with the chapter's highlights applied. */
 export function Ph({ text }: { text: string }) {
+  const phrases = useHighlights();
   return (
     <>
-      {segments(text).map((p, i) => (
+      {segments(text, phrases).map((p, i) => (
         <Fragment key={i}>
           <PartSpan part={p} />
         </Fragment>
@@ -57,5 +68,3 @@ export function Ph({ text }: { text: string }) {
     </>
   );
 }
-
-export const isPlaceholder = (s: string) => /^\s*\[[^\]]*\]\s*$/.test(s);

@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionConfig, motion, transform, useScroll, useTransform, type MotionStyle } from "framer-motion";
+import { MotionConfig, motion, transform, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { story } from "@/story.config";
 import { Chrome, type Chapter } from "./Chrome";
@@ -15,6 +15,7 @@ import { InsightDrift } from "./sections/InsightDrift";
 import { PinnedCanvas } from "./sections/PinnedCanvas";
 import { ProofStats } from "./sections/ProofStats";
 import { TradeoffGrid } from "./sections/TradeoffGrid";
+import { Highlights } from "./text";
 
 const CHAPTERS: Chapter[] = [
   { id: "story-arrival", label: "Arrival" },
@@ -29,13 +30,12 @@ const CHAPTERS: Chapter[] = [
 
 // Colours per ground: night (black) → paper (white) → warm (brand blue).
 const INK = { night: "#ffffff", paper: "#131313", warm: "#ffffff" };
-// {accent} words: red text on white; white text on a red chip on black / blue.
-const ACCENT_FG = { night: "#ffffff", paper: "#c23b21", warm: "#ffffff" };
-const ACCENT_BG = { night: "rgba(194, 59, 33, 1)", paper: "rgba(194, 59, 33, 0)", warm: "rgba(194, 59, 33, 1)" };
 // Progress bar + active rail dot (shapes, never text): whichever palette colour pops on the ground.
 const SIGNAL = { night: "#ffd301", paper: "#264ed0", warm: "#ffd301" };
 
 type Stops = { night: string; paper: string; warm: string };
+
+const hl = story.highlights;
 
 export function StoryPage() {
   const problemRef = useRef<HTMLElement>(null);
@@ -52,8 +52,6 @@ export function StoryPage() {
     ([a, b]: number[]) =>
       b > 0 ? transform(b, [0, 1], [c.paper, c.warm]) : transform(a, [0, 1], [c.night, c.paper]);
   const ink = useTransform([paper, warm], byGround(INK));
-  const accentFg = useTransform([paper, warm], byGround(ACCENT_FG));
-  const accentBg = useTransform([paper, warm], byGround(ACCENT_BG));
   const signal = useTransform([paper, warm], byGround(SIGNAL));
 
   return (
@@ -65,16 +63,33 @@ export function StoryPage() {
       {/* overflow-x: clip (not hidden) so position: sticky keeps working */}
       <motion.main
         className="relative overflow-x-clip"
-        style={{ color: ink, "--accent-fg": accentFg, "--accent-bg": accentBg } as MotionStyle}
+        style={{ color: ink }}
       >
-        <HeroIntro />
-        <BrokenReality ref={problemRef} />
-        <InsightDrift />
-        <PinnedCanvas />
-        <DemoFrame />
-        <TradeoffGrid />
-        <ProofStats />
-        <Finale ref={finaleRef} />
+        {/* Each chapter gets its own yellow phrases from story.config.ts › highlights */}
+        <Highlights phrases={hl.hero}>
+          <HeroIntro />
+        </Highlights>
+        <Highlights phrases={hl.problem}>
+          <BrokenReality ref={problemRef} />
+        </Highlights>
+        <Highlights phrases={hl.insight}>
+          <InsightDrift />
+        </Highlights>
+        <Highlights phrases={hl.product}>
+          <PinnedCanvas />
+        </Highlights>
+        <Highlights phrases={hl.demo}>
+          <DemoFrame />
+        </Highlights>
+        <Highlights phrases={hl.tradeoffs}>
+          <TradeoffGrid />
+        </Highlights>
+        <Highlights phrases={hl.proof}>
+          <ProofStats />
+        </Highlights>
+        <Highlights phrases={hl.finale}>
+          <Finale ref={finaleRef} />
+        </Highlights>
       </motion.main>
     </MotionConfig>
   );

@@ -43,7 +43,7 @@ export function ProofStats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.7 }}
           transition={{ duration: 0.9, ease: bz("power3Out") }}
-          className="border-hairline bg-surface text-ink [--accent-fg:#c23b21] [--accent-bg:transparent] relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
+          className="border-hairline bg-surface text-ink relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
         >
           <span className="bg-blue absolute inset-y-0 left-0 w-1" aria-hidden />
           <span className="bg-yellow grid h-11 w-11 text-black shrink-0 place-items-center rounded-full">

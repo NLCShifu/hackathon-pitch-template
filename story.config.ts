@@ -2,10 +2,10 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  EDIT THIS FILE ONLY.  Replace every [BRACKETED PLACEHOLDER] with your copy.
  *
- *  • Bracketed text renders as black text on a yellow highlighter, so you can
- *    see at a glance what is still unfilled. Filled text renders plain.
- *  • Wrap words in {curly braces} to accent them on purpose (red on white
- *    sections, white on a red chip on dark/blue ones), e.g. "SO WE BUILT {Nimbus}."
+ *  • {Curly braces} are the yellow highlighter: black text on a yellow marker.
+ *    It is a design choice, not a placeholder marker. Keep the braces when you
+ *    swap in your copy, e.g. "[USER] SHOULD…" → "{Night nurses} SHOULD…".
+ *    Use it sparingly: one key phrase per headline reads best.
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
  *    .mp4 / .webm paths render as muted autoplay loops.
  * ─────────────────────────────────────────────────────────────────────────
@@ -13,6 +13,23 @@
 import { Gauge, Layers, ShieldCheck, Sparkles } from "lucide-react";
 
 export const story = {
+  /*
+   * YELLOW HIGHLIGHTS. The only place that decides what turns yellow.
+   * List the exact words (case-sensitive) per chapter; every match in that
+   * chapter becomes black text on a yellow marker. [] = no yellow.
+   * When you rewrite a headline, update its phrase here too.
+   */
+  highlights: {
+    hero: ["[STARTUP NAME]"],
+    problem: ["[USER]"],
+    insight: ["[THE OBVIOUS SOLUTION]", "[YOUR NON-OBVIOUS INSIGHT]"],
+    product: ["[STARTUP NAME]"],
+    demo: [],
+    tradeoffs: ["ON PURPOSE"],
+    proof: ["[X HOURS]"],
+    finale: ["[A BETTER FUTURE]"],
+  } satisfies Record<string, string[]>,
+
   meta: {
     title: "[STARTUP NAME]",
     description: "[The clear human outcome you create.]",
@@ -30,7 +47,8 @@ export const story = {
   /* 2 ─ The broken reality */
   problem: {
     headline: "[USER] SHOULD NOT HAVE TO [PAINFUL THING].",
-    context: "[Describe the exact moment: what happens, what they do today, and what it costs.]",
+    context:
+      "[Describe the exact moment: what happens, what they do today, and what it costs.]",
     photoLabel: "[REAL-WORLD PROBLEM PHOTO]",
     image: "", // e.g. "/problem.jpg"
   },
@@ -39,7 +57,11 @@ export const story = {
   insight: {
     headline: "WE DIDN’T BUILD [THE OBVIOUS SOLUTION].",
     because: "Because [why it still fails the user].",
-    steps: ["[CURRENT WORKAROUND]", "[THE ACTUAL BOTTLENECK]", "[YOUR INSIGHT]"],
+    steps: [
+      "[CURRENT WORKAROUND]",
+      "[THE ACTUAL BOTTLENECK]",
+      "[YOUR INSIGHT]",
+    ],
     banner: "THE REAL BOTTLENECK IS [YOUR NON-OBVIOUS INSIGHT].",
   },
 
@@ -70,9 +92,21 @@ export const story = {
   tradeoffs: {
     headline: "WE MADE THESE TRADE-OFFS ON PURPOSE.",
     cards: [
-      { n: "01", title: "WE BUILT", body: "[smallest thing proving key assumption]" },
-      { n: "02", title: "WE DID NOT BUILD", body: "[tempting non-essential feature]" },
-      { n: "03", title: "BECAUSE", body: "[why this was the correct technical choice]" },
+      {
+        n: "01",
+        title: "WE BUILT",
+        body: "[smallest thing proving key assumption]",
+      },
+      {
+        n: "02",
+        title: "WE DID NOT BUILD",
+        body: "[tempting non-essential feature]",
+      },
+      {
+        n: "03",
+        title: "BECAUSE",
+        body: "[why this was the correct technical choice]",
+      },
     ],
     tech: "[Architecture / model / sensor / workflow in one defensible line]",
   },
@@ -85,14 +119,16 @@ export const story = {
       { value: "[Y]", label: "key output" },
       { value: "[Z]", label: "seconds / % / result" },
     ],
-    learned: "What we learned: [One honest result. What worked + next constraint].",
+    learned:
+      "What we learned: [One honest result. What worked + next constraint].",
   },
 
   /* 8 ─ Horizon & the ask */
   finale: {
     headline: "WE ARE TURNING [OLD PAINFUL REALITY] INTO [A BETTER FUTURE].",
     ask: "THE ASK: [pilot / intro / access / mentorship / prize]",
-    milestone: "Next milestone: [specific experiment or build by concrete time]",
+    milestone:
+      "Next milestone: [specific experiment or build by concrete time]",
     qrUrl: "", // e.g. "https://your-demo.app" → renders a live QR code
     qrImage: "", // or a pre-made QR image, e.g. "/qr.png"
     qrLabel: "[QR CODE]",

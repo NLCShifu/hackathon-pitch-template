@@ -70,7 +70,7 @@ function Stage() {
 
       <div className="relative overflow-hidden rounded-[22px]">
         <motion.div className="bg-accent absolute inset-0 origin-left" style={{ scaleX: bannerWipe }} aria-hidden />
-        <div className="relative px-6 py-6 [--accent-bg:#131313] [--accent-fg:#ffffff] md:px-10 md:py-8">
+        <div className="relative px-6 py-6 md:px-10 md:py-8">
           <RevealWords
             as="p"
             text={insight.banner}
@@ -107,7 +107,7 @@ function Step({ index, text, progress, last }: { index: number; text: string; pr
       </div>
       <motion.div
         style={{ backgroundColor: bg, borderColor: border }}
-        className="text-ink min-h-[clamp(96px,16vh,170px)] rounded-[22px] border [--accent-fg:#c23b21] [--accent-bg:transparent] p-6 shadow-[0_24px_50px_-36px_#13131366] md:p-7"
+        className="text-ink min-h-[clamp(96px,16vh,170px)] rounded-[22px] border p-6 shadow-[0_24px_50px_-36px_#13131366] md:p-7"
       >
         <p className="story-line text-[clamp(1.3rem,2.2vw,1.9rem)]">
           <Ph text={text} />
