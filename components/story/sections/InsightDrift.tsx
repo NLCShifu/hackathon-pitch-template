@@ -38,7 +38,7 @@ function Stage() {
   return (
     <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-[clamp(28px,5vh,56px)] px-6 md:px-12">
       <motion.div style={{ opacity: recede }}>
-        <ChapterMark n={4} />
+        <ChapterMark n={3} />
         <RevealWords
           as="h2"
           text={insight.headline}

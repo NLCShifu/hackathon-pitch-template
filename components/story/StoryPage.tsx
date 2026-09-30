@@ -9,7 +9,6 @@ import { useScrub } from "./motion";
 import { DeckProvider, usePresentation } from "./Presentation";
 import { SmoothScroll } from "./SmoothScroll";
 import { BrokenReality } from "./sections/BrokenReality";
-import { DemoFrame } from "./sections/DemoFrame";
 import { Finale } from "./sections/Finale";
 import { HeroIntro } from "./sections/HeroIntro";
 import { InsightDrift } from "./sections/InsightDrift";
@@ -20,7 +19,6 @@ import { Highlights } from "./text";
 
 const CHAPTERS: Chapter[] = [
   { id: "story-arrival", label: "Arrival" },
-  { id: "story-demo", label: "Demo" },
   { id: "story-problem", label: "Reality" },
   { id: "story-insight", label: "Insight" },
   { id: "story-product", label: "The bet" },
@@ -71,9 +69,6 @@ export function StoryPage() {
           {/* Each chapter gets its own yellow phrases from story.config.ts › highlights */}
           <Highlights phrases={hl.hero}>
             <HeroIntro />
-          </Highlights>
-          <Highlights phrases={hl.demo}>
-            <DemoFrame />
           </Highlights>
           <Highlights phrases={hl.problem}>
             <BrokenReality ref={problemRef} />

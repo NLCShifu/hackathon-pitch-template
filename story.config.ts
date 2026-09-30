@@ -7,8 +7,7 @@
  *    swap in your copy, e.g. "[USER] SHOULD…" → "{Night nurses} SHOULD…".
  *    Use it sparingly: one key phrase per headline reads best.
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
- *    .mp4 / .webm paths render as muted autoplay loops (except demo.video,
- *    which waits for a click and plays with sound).
+ *    .mp4 / .webm paths render as muted autoplay loops.
  * ─────────────────────────────────────────────────────────────────────────
  */
 import { Gauge, Globe, Quote, TriangleAlert } from "lucide-react";
@@ -22,7 +21,6 @@ export const story = {
    */
   highlights: {
     hero: ["HYLITE"],
-    demo: [],
     problem: ["EMPLOYEES"],
     insight: ["ANOTHER HR CHATBOT", "TRUST"],
     product: ["HYLITE"],
@@ -45,26 +43,14 @@ export const story = {
     scrollHint: "Scroll",
   },
 
-  /* 2 ─ Proof in motion (right after the title) */
-  demo: {
-    action: "WATCH THE DEMO",
-    frameLabel: "HYLITE IN ACTION",
-    image: "", // poster still shown before playback, e.g. "/demo.png"
-    // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
-    video: "",
-    plan: "", // optional caption bar under the demo; empty = hidden
-  },
-
-  /* 3 ─ The broken reality */
+  /* 2 ─ The broken reality */
   problem: {
     headline: "EMPLOYEES SHOULD NOT HAVE TO DIG FOR THEIR RIGHTS.",
     context:
       "Contracts, handbooks, emails and labour law. They disagree, and the right answer gets buried.",
-    photoLabel: "CONTRACT · HR HANDBOOK · EMAILS · LABOUR LAW",
-    image: "", // e.g. "/problem.jpg"
   },
 
-  /* 4 ─ Bottleneck & non-obvious insight */
+  /* 3 ─ Bottleneck & non-obvious insight */
   insight: {
     headline: "WE DIDN’T BUILD ANOTHER HR CHATBOT.",
     because: "Because a paraphrase is not proof.",
@@ -76,12 +62,12 @@ export const story = {
     banner: "THE REAL BOTTLENECK IS TRUST.",
   },
 
-  /* 5 ─ The product bet (pinned canvas) */
+  /* 4 ─ The product bet (pinned canvas) */
   product: {
     headline: "SO WE BUILT HYLITE.",
     line: "Ask a question. Get the exact paragraph, highlighted.",
     heroLabel: "YELLOW = ANSWER · RED = CONFLICT",
-    image: "", // e.g. "/hero.png"
+    image: "/hylite-score.png", // e.g. "/hero.png"
     // Up to 4 callouts float over the canvas as you scroll. Swap icons from lucide.dev/icons.
     pills: [
       { icon: Quote, text: "REAL QUOTES, NO AI-WRITTEN ANSWERS" },
@@ -91,7 +77,7 @@ export const story = {
     ],
   },
 
-  /* 6 ─ Intentional trade-offs */
+  /* 5 ─ Intentional trade-offs */
   tradeoffs: {
     headline: "WE MADE THESE TRADE-OFFS ON PURPOSE.",
     cards: [
@@ -114,7 +100,7 @@ export const story = {
     tech: "Node.js + React, one shared TypeScript API.",
   },
 
-  /* 7 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
+  /* 6 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
   proof: {
     headline: "WHAT OUR PROTOTYPE DOES TODAY.",
     stats: [
@@ -126,7 +112,7 @@ export const story = {
       "Type a question, get ranked quotes from your documents with the answer highlighted.",
   },
 
-  /* 8 ─ Horizon & the ask */
+  /* 7 ─ Horizon & the ask */
   finale: {
     headline: "WE ARE TURNING HR GUESSWORK INTO ANSWERS YOU CAN CITE.",
     ask: "THE ASK: A COMPANY TO TEST HYLITE ON ITS REAL HR DOCUMENTS.",
@@ -147,7 +133,7 @@ export const story = {
     smoothing: "lenis" as "lenis" | "scrub",
     lenis: { lerp: 0.1, wheelMultiplier: 1 },
     // Extra scroll distance each pinned chapter holds the screen, in vh.
-    pin: { hero: 110, insight: 190, canvas: 300, demo: 220 },
+    pin: { hero: 110, insight: 190, canvas: 300 },
   },
 };
 

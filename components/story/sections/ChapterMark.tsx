@@ -1,5 +1,5 @@
-/** Monospaced chapter index, e.g. "02 / 08", with a hairline rule. */
-export function ChapterMark({ n, of = 8, className = "" }: { n: number; of?: number; className?: string }) {
+/** Monospaced chapter index, e.g. "02 / 07", with a hairline rule. */
+export function ChapterMark({ n, of = 7, className = "" }: { n: number; of?: number; className?: string }) {
   const pad = (v: number) => String(v).padStart(2, "0");
   return (
     <p className={`eyebrow flex items-center gap-3 ${className}`}>

@@ -29,7 +29,7 @@ export function TradeoffGrid() {
   return (
     <section id="story-tradeoffs" ref={ref} data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
       <div className="mx-auto max-w-[1240px]">
-        <ChapterMark n={6} />
+        <ChapterMark n={5} />
         <Beat n={0}>
           <RevealWords as="h2" text={tradeoffs.headline} className="story-line t-display mt-6 max-w-[16ch]" duration={0.9} />
         </Beat>

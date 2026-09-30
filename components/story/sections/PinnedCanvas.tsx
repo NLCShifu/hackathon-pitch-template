@@ -60,7 +60,7 @@ function Stage() {
         style={{ y: headY, scale: headScale, opacity: copyOut }}
         className="relative z-[2] w-full max-w-[980px] origin-top text-center"
       >
-        <ChapterMark n={5} className="justify-center" />
+        <ChapterMark n={4} className="justify-center" />
         <RevealWords as="h2" text={product.headline} className="story-line t-display mt-4" progress={p} at={0.02} duration={0.12} />
         <RevealWords
           as="p"
