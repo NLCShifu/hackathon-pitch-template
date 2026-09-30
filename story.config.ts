@@ -26,8 +26,8 @@ export const story = {
     problem: ["EMPLOYEES"],
     insight: ["ANOTHER HR CHATBOT", "TRUST"],
     product: ["HYLITE"],
-    tradeoffs: ["ON PURPOSE"],
-    proof: ["A WORKING PROTOTYPE"],
+    tradeoffs: ["ON PURPOSE", "WE BUILT", "WE DID NOT BUILD", "BECAUSE"],
+    proof: ["PROTOTYPE"],
     finale: ["ANSWERS YOU CAN CITE"],
   } satisfies Record<string, string[]>,
 
@@ -69,9 +69,9 @@ export const story = {
     headline: "WE DIDN’T BUILD ANOTHER HR CHATBOT.",
     because: "Because a paraphrase is not proof.",
     steps: [
-      "SEARCH BY HAND",
-      "CONFLICTING SOURCES",
-      "SHOW THE SOURCE",
+      "TODAY: SEARCHING PDFs AND EMAILS BY HAND",
+      "PROBLEM: SOURCES CONTRADICT EACH OTHER",
+      "OUR FIX: SHOW THE EXACT SOURCE TEXT",
     ],
     banner: "THE REAL BOTTLENECK IS TRUST.",
   },
@@ -84,10 +84,10 @@ export const story = {
     image: "", // e.g. "/hero.png"
     // Up to 4 callouts float over the canvas as you scroll. Swap icons from lucide.dev/icons.
     pills: [
-      { icon: Quote, text: "NO GENERATED TEXT" },
-      { icon: Gauge, text: "SMART RANKING" },
-      { icon: TriangleAlert, text: "CONFLICTS IN RED" },
-      { icon: Globe, text: "COUNTRY-AWARE" },
+      { icon: Quote, text: "REAL QUOTES, NO AI-WRITTEN ANSWERS" },
+      { icon: Gauge, text: "LAW FIRST, NEWEST FIRST" },
+      { icon: TriangleAlert, text: "CONTRADICTIONS MARKED IN RED" },
+      { icon: Globe, text: "ADDS THE LAW OF YOUR COUNTRY" },
     ],
   },
 
@@ -98,17 +98,17 @@ export const story = {
       {
         n: "01",
         title: "WE BUILT",
-        body: "Search with highlighted source paragraphs.",
+        body: "A search that returns exact paragraphs: the answer in yellow, conflicts in red.",
       },
       {
         n: "02",
         title: "WE DID NOT BUILD",
-        body: "A production database. Search is mocked for now.",
+        body: "A real database yet. A mock reads 5 sample folders so we could test fast.",
       },
       {
         n: "03",
         title: "BECAUSE",
-        body: "Trust was the risk to test, not scale.",
+        body: "The big question is trust in quoted sources. The database plugs in later.",
       },
     ],
     tech: "Node.js + React, one shared TypeScript API.",
@@ -116,25 +116,22 @@ export const story = {
 
   /* 7 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
   proof: {
-    headline: "WHAT WE DELIVERED: A WORKING PROTOTYPE.",
+    headline: "WHAT OUR PROTOTYPE DOES TODAY.",
     stats: [
-      { value: "5", label: "topic folders" },
-      { value: "4", label: "file formats" },
-      { value: "0", label: "generated sentences" },
+      { value: "5", label: "HR topics searched" },
+      { value: "4", label: "ranking signals: law, date, match, tone" },
+      { value: "0", label: "AI-written sentences" },
     ],
     learned:
-      "Every answer is a real quote from a real source.",
+      "Type a question, get ranked quotes from your documents with the answer highlighted.",
   },
 
   /* 8 ─ Horizon & the ask */
   finale: {
     headline: "WE ARE TURNING HR GUESSWORK INTO ANSWERS YOU CAN CITE.",
-    ask: "THE ASK: A PILOT TEAM.",
+    ask: "THE ASK: A COMPANY TO TEST HYLITE ON ITS REAL HR DOCUMENTS.",
     milestone:
       "Next milestone: connect the real database.",
-    qrUrl: "", // e.g. "https://your-demo.app" → renders a live QR code
-    qrImage: "", // or a pre-made QR image, e.g. "/qr.png"
-    qrLabel: "TRY HYLITE",
     thanks: "THANK YOU.",
   },
 
