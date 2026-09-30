@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { story } from "@/story.config";
 import { Chrome, type Chapter } from "./Chrome";
 import { Ground } from "./Ground";
-import { useScrub } from "./motion";
+import { ease, useScrub } from "./motion";
 import { DeckProvider, usePresentation } from "./Presentation";
 import { SmoothScroll } from "./SmoothScroll";
 import { BrokenReality } from "./sections/BrokenReality";
@@ -44,7 +44,11 @@ export function StoryPage() {
   const present = usePresentation(CHAPTERS);
 
   // Ground crossfades are keyed to where chapters sit, not to fixed pixel values.
-  const { scrollYProgress: toPaper } = useScroll({ target: problemRef, offset: ["start 100%", "start 20%"] });
+  // Black → white is a long, eased dissolve: it starts as the title begins to fade
+  // and completes just before the next headline (~18svh below its section top)
+  // scrolls into view, so no headline is ever mid-colour on a mid-grey ground.
+  const { scrollYProgress: toPaperLinear } = useScroll({ target: problemRef, offset: ["start 175%", "start 74%"] });
+  const toPaper = useTransform(toPaperLinear, (v) => ease.power1InOut(v));
   const { scrollYProgress: toWarm } = useScroll({ target: finaleRef, offset: ["start 55%", "start 5%"] });
   const paper = useScrub(toPaper);
   const warm = useScrub(toWarm);
