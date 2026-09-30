@@ -91,8 +91,10 @@ export function RevealWords(props: ScrollLinked | Triggered) {
 function ScrubbedWords({ words, Tag, progress, at, duration, out, className, style }: ScrollLinked & { words: Word[]; Tag: Tag }) {
   const each = staggerEach(duration, words.length);
   const joins = placeholderJoins(words);
-  const exitOpacity = useTransform(progress, out ?? [2, 3], [1, 0], { ease: ease.power1In });
-  const exitY = useTransform(progress, out ?? [2, 3], [0, -18], { ease: ease.power1In });
+  // No exit window → constant output. Input ranges must stay within 0–1: framer can hand
+  // scroll-linked transforms to the Web Animations API, which rejects offsets outside it.
+  const exitOpacity = useTransform(progress, out ?? [0, 1], out ? [1, 0] : [1, 1], { ease: ease.power1In });
+  const exitY = useTransform(progress, out ?? [0, 1], out ? [0, -18] : [0, 0], { ease: ease.power1In });
   // autoAlpha: hidden until the reveal starts, so stacked lines don't catch clicks.
   const visibility = useTransform(progress, (p) => (p < at || (out && p >= out[1]) ? "hidden" : "visible"));
   const MotionTag = motionTag(Tag);
