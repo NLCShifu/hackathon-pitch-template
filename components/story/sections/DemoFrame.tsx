@@ -137,21 +137,23 @@ function Stage() {
           </div>
         </div>
 
-        <motion.div
-          style={{ opacity: barOpacity, y: barY }}
-          className="pointer-events-none absolute inset-x-4 bottom-4 z-[2] md:inset-x-8 md:bottom-7"
-        >
-          <div className={`${overlay} border-cream/15 bg-night/70 text-cream-dim mx-auto flex max-w-[980px] items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-md md:px-6`}>
-            <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" aria-hidden>
-              <span className="animate-live bg-yellow absolute inset-0 rounded-full" />
-              <span className="bg-yellow relative h-2.5 w-2.5 rounded-full" />
-            </span>
-            <Radio className="text-yellow hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
-            <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]">
-              <Ph text={demo.plan} />
-            </p>
-          </div>
-        </motion.div>
+        {demo.plan && (
+          <motion.div
+            style={{ opacity: barOpacity, y: barY }}
+            className="pointer-events-none absolute inset-x-4 bottom-4 z-[2] md:inset-x-8 md:bottom-7"
+          >
+            <div className={`${overlay} border-cream/15 bg-night/70 text-cream-dim mx-auto flex max-w-[980px] items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-md md:px-6`}>
+              <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" aria-hidden>
+                <span className="animate-live bg-yellow absolute inset-0 rounded-full" />
+                <span className="bg-yellow relative h-2.5 w-2.5 rounded-full" />
+              </span>
+              <Radio className="text-yellow hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
+              <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]">
+                <Ph text={demo.plan} />
+              </p>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );

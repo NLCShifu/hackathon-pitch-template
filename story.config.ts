@@ -49,10 +49,10 @@ export const story = {
   demo: {
     action: "WATCH THE DEMO",
     frameLabel: "HYLITE IN ACTION",
-    //image: "", // poster still shown before playback, e.g. "/demo.png"
+    image: "", // poster still shown before playback, e.g. "/demo.png"
     // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
     video: "",
-    //plan: "Live demo plan: [one sentence]. Backup: [recorded clip / screenshot].",
+    plan: "", // optional caption bar under the demo; empty = hidden
   },
 
   /* 3 ─ The broken reality */
