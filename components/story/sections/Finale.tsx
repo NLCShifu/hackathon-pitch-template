@@ -10,6 +10,8 @@ import { bz } from "../motion";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
+import { ChaosLayer } from "../chaos/ChaosLayer";
+import { useConfetti } from "../chaos/Confetti";
 
 const rise = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -20,12 +22,14 @@ const rise = (delay = 0) => ({
 
 /** Horizon and ask. The page ground crossfades to warm as this section rises (see StoryPage). */
 export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
+  const confetti = useConfetti(90);
   const { finale, hero } = story;
   const [askLabel, ...askRest] = finale.ask.split(":");
   const askBody = askRest.join(":").trim();
 
   return (
     <section id="story-ask" ref={ref} data-chapter className="relative z-[1] px-6 pt-[20svh] pb-12 md:px-12">
+      <ChaosLayer chapter="finale" />
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={8} />
         <RevealWords as="h2" text={finale.headline} className="story-line t-hero mt-6 max-w-[16ch]" duration={1} />
@@ -35,7 +39,7 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
             {...rise()}
             className="border-on-accent/25 bg-on-accent/[0.08] rounded-[26px] border p-7 backdrop-blur-sm md:col-span-8 md:p-10"
           >
-            <p className="eyebrow flex items-center gap-2.5 !opacity-80">
+            <p className="eyebrow flex items-center gap-2.5">
               <Handshake className="h-4 w-4" strokeWidth={1.8} aria-hidden />
               {askRest.length ? askLabel : "THE ASK"}
             </p>
@@ -52,13 +56,13 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
           </motion.div>
 
           <motion.figure {...rise(0.12)} className="flex flex-col items-center justify-center gap-4 md:col-span-4">
-            <div className="text-ink relative rounded-[26px] bg-white p-5 shadow-[0_40px_80px_-40px_#3d1a0899]">
+            <div className="text-ink relative rounded-[26px] bg-white p-5 shadow-[0_40px_80px_-40px_#0b1a5299]">
               <Corners />
               <div className="relative grid h-[clamp(150px,18vw,210px)] w-[clamp(150px,18vw,210px)] place-items-center">
                 <QrSlot />
               </div>
             </div>
-            <figcaption className="eyebrow !opacity-80">
+            <figcaption className="eyebrow">
               <Ph text={finale.qrLabel} />
             </figcaption>
           </motion.figure>
@@ -70,9 +74,12 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 1.1, ease: bz("backOut") }}
-            className="story-line t-mega origin-bottom-left"
+            onViewportEnter={() => setTimeout(confetti.burst, 450)}
+            onClick={confetti.burst}
+            className="story-line t-mega relative origin-bottom-left cursor-pointer"
           >
             <Ph text={finale.thanks} />
+            {confetti.layer}
           </motion.p>
           <p className="eyebrow pb-3 md:text-right">
             <Ph text={hero.name} /> <span aria-hidden>{"//"}</span> <Ph text={hero.team} />
@@ -85,7 +92,7 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
 
 function QrSlot() {
   const { qrUrl, qrImage } = story.finale;
-  if (qrUrl) return <QRCodeSVG value={qrUrl} className="h-full w-full" bgColor="transparent" fgColor="#2a2420" level="M" />;
+  if (qrUrl) return <QRCodeSVG value={qrUrl} className="h-full w-full" bgColor="transparent" fgColor="#131313" level="M" />;
   if (qrImage) return <Image src={qrImage} alt="QR code" fill sizes="210px" className="object-contain" />;
   return (
     <div className="placeholder-frame text-ink flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl">

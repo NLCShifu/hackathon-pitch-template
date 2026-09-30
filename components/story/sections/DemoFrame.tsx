@@ -20,7 +20,7 @@ import { ChapterMark } from "./ChapterMark";
  */
 export function DemoFrame() {
   return (
-    <PinnedSection id="story-demo" scrollVh={story.motion.pin.demo} restProgress={1} padded={false}>
+    <PinnedSection id="story-demo" chapter="demo" scrollVh={story.motion.pin.demo} restProgress={1} padded={false}>
       <Stage />
     </PinnedSection>
   );
@@ -48,7 +48,7 @@ function Stage() {
 
       <motion.div
         style={{ scale, borderRadius: radius }}
-        className="bg-night-lift text-cream absolute inset-3 overflow-hidden shadow-[0_60px_140px_-60px_#16110eaa] will-change-transform md:inset-6"
+        className="bg-night-lift text-cream absolute inset-3 overflow-hidden shadow-[0_60px_140px_-60px_#131313aa] will-change-transform md:inset-6"
       >
         <motion.div className="absolute inset-0" style={{ scale: mediaScale }}>
           <MediaFrame src={demo.image} label={demo.frameLabel} configKey="demo.image" priority />
@@ -56,18 +56,15 @@ function Stage() {
 
         <motion.div
           style={{ opacity: scrim }}
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,#16110ee6_0%,#16110e80_32%,transparent_62%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,#131313e6_0%,#13131380_32%,transparent_62%)]"
           aria-hidden
         />
 
-        <div
-          className="absolute inset-x-0 bottom-[clamp(96px,16vh,150px)] px-6 md:px-12"
-          style={{ ["--ph" as string]: "var(--color-accent-lift)" }}
-        >
+        <div className="absolute inset-x-0 bottom-[clamp(96px,16vh,150px)] px-6 md:px-12">
           <div className="flex max-w-[1100px] items-end gap-5">
             <motion.span
               style={{ opacity: scrim }}
-              className="bg-accent text-on-accent hidden h-14 w-14 shrink-0 place-items-center rounded-full md:grid"
+              className="bg-yellow text-black hidden h-14 w-14 shrink-0 place-items-center rounded-full md:grid"
               aria-hidden
             >
               <Play className="ml-0.5 h-5 w-5" fill="currentColor" strokeWidth={0} />
@@ -79,11 +76,11 @@ function Stage() {
         <motion.div style={{ opacity: barOpacity, y: barY }} className="absolute inset-x-4 bottom-4 md:inset-x-8 md:bottom-7">
           <div className="border-cream/15 bg-night/70 text-cream-dim mx-auto flex max-w-[980px] items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-md md:px-6">
             <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" aria-hidden>
-              <span className="animate-live bg-accent-lift absolute inset-0 rounded-full" />
-              <span className="bg-accent-lift relative h-2.5 w-2.5 rounded-full" />
+              <span className="animate-live bg-yellow absolute inset-0 rounded-full" />
+              <span className="bg-yellow relative h-2.5 w-2.5 rounded-full" />
             </span>
-            <Radio className="text-accent-lift hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
-            <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]" style={{ ["--ph" as string]: "#f6f1e9" }}>
+            <Radio className="text-yellow hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
+            <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]">
               <Ph text={demo.plan} />
             </p>
           </div>

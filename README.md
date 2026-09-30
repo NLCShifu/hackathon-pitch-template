@@ -1,6 +1,6 @@
 # Web Story Template
 
-A continuous-scroll product manifesto for hackathon teams. Its typography and motion follow askwhisper.com/story. It is one vertical flow, not a slide deck: chapters pin, type morphs, and one shared background turns from night to paper to warm as you scroll.
+A continuous-scroll product manifesto for hackathon teams. Its typography and motion follow askwhisper.com/story. It is one vertical flow, not a slide deck: chapters pin, type morphs, and one shared background turns from black to white to brand blue as you scroll.
 
 **Stack:** Next.js 16 (App Router), React 19, Tailwind CSS 4, Framer Motion 13, Lenis, Lucide, qrcode.react
 
@@ -13,10 +13,10 @@ npm run build && npm start
 ## Fill it in (≈10 minutes)
 
 1. Open **`story.config.ts`**. It is the only file you need to edit.
-2. Replace every `[BRACKETED PLACEHOLDER]`. Unfilled brackets show in the accent colour with a dashed underline, so you can see what's left at a glance.
+2. Replace every `[BRACKETED PLACEHOLDER]` with your copy (brackets and all).
 3. Put images in `/public` and set `image: "/your-file.jpg"`. `.mp4` and `.webm` files play as muted loops.
 4. Set `finale.qrUrl` to your demo link and the QR code is generated for you.
-5. Optional: wrap words in `{curly braces}` to colour them with the accent on purpose.
+5. What turns yellow is set in one place: the `highlights` block at the top of `story.config.ts`. List the exact words per chapter (case-sensitive). Use `[]` for no yellow. When you rewrite a headline, update its phrase there too.
 
 ## File map
 
@@ -32,6 +32,7 @@ components/story/
   Ground.tsx / Chrome.tsx       fixed background stack / progress bar, chapter rail, scroll cue
   MediaFrame.tsx                image · video · labelled empty slot
   motion.ts                     GSAP-equivalent eases, scrub spring, reduced-motion hook
+  chaos/                        stickers, doodles, memes, banners, confetti
   sections/
     HeroIntro.tsx               1 · arrival (pinned 110vh, variable-font morph)
     BrokenReality.tsx           2 · split narrative, clip-path wipe + parallax
@@ -60,6 +61,25 @@ components/story/
 - Sizes: `clamp(2.85rem, 9.4vw, 7.5rem)` (hero), `clamp(1.78rem, 4.6vw, 3.6rem)` (lead), `clamp(1.62rem, 3.7vw, 3rem)` (section).
 - Body: Urbanist 500, 1.55 line-height.
 - Eyebrows: 12px, `0.19em` tracking, uppercase. They use JetBrains Mono because Whisper's page has no monospaced face.
+
+## Colour
+
+Palette: blue `#264ed0` · sky `#5dadeb` · yellow `#ffd301` · red `#c23b21` · charcoal `#333333` · black `#131313`, plus white. Tokens live in `app/globals.css`.
+
+- **Grounds:** black (arrival) → white (chapters 2–7) → blue (finale). Text flips between white and black to match.
+- **Yellow and sky are never text colours.** They are used as fills: the highlighter, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
+- Red, blue and charcoal carry text colour on white (the trade-off counters).
+
+## Chaos layer
+
+The funny stuff sits on top of the design and never changes it. It is all in `story.config.ts › chaos`:
+
+- `items`: tilted **stickers**, handwritten **notes**, self-drawing **doodles** (arrow, circle, underline, star, zigzag, a "forbidden" sign with any Lucide icon inside) and **meme** polaroids (drop an image in `/public`, set `image`). Place each one with `chapter`, `x`/`y` (% of that chapter) and `rotate`. Delete an entry to remove it.
+- `banners`: crossed yellow and blue scrolling strips between chapters. They speed up when you scroll fast.
+- `confetti`: fires on "THANK YOU." and when you click the startup name.
+- `enabled: false` turns the whole layer off.
+
+Stickers jiggle when you scroll quickly and wiggle on hover. Chaos items hide on phones unless `mobile: true`. With reduced motion everything stays still and there is no confetti.
 
 ## Tuning
 

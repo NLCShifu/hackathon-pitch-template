@@ -2,17 +2,34 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  EDIT THIS FILE ONLY.  Replace every [BRACKETED PLACEHOLDER] with your copy.
  *
- *  • Bracketed text renders with a dashed underline in the accent colour, so
- *    you can see at a glance what is still unfilled. Filled text renders plain.
- *  • Wrap words in {curly braces} to paint them in the accent colour on purpose,
- *    e.g. "SO WE BUILT {Nimbus}."
+ *  • What turns yellow is set in one place: `highlights` right below.
+ *  • The funny stuff (stickers, scribbles, memes, banners, confetti) lives in
+ *    `chaos` near the bottom. Delete an entry to remove it.
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
  *    .mp4 / .webm paths render as muted autoplay loops.
  * ─────────────────────────────────────────────────────────────────────────
  */
-import { Gauge, Layers, ShieldCheck, Sparkles } from "lucide-react";
+import { Bird, Gauge, Layers, ShieldCheck, Sparkles } from "lucide-react";
+import type { ChaosBanner, ChaosItem } from "@/components/story/chaos/types";
 
 export const story = {
+  /*
+   * YELLOW HIGHLIGHTS. The only place that decides what turns yellow.
+   * List the exact words (case-sensitive) per chapter; every match in that
+   * chapter becomes black text on a yellow marker. [] = no yellow.
+   * When you rewrite a headline, update its phrase here too.
+   */
+  highlights: {
+    hero: ["[STARTUP NAME]"],
+    problem: ["[USER]"],
+    insight: ["[THE OBVIOUS SOLUTION]", "[YOUR NON-OBVIOUS INSIGHT]"],
+    product: ["[STARTUP NAME]"],
+    demo: [],
+    tradeoffs: ["ON PURPOSE"],
+    proof: ["[X HOURS]"],
+    finale: ["[A BETTER FUTURE]"],
+  } satisfies Record<string, string[]>,
+
   meta: {
     title: "[STARTUP NAME]",
     description: "[The clear human outcome you create.]",
@@ -70,9 +87,21 @@ export const story = {
   tradeoffs: {
     headline: "WE MADE THESE TRADE-OFFS ON PURPOSE.",
     cards: [
-      { n: "01", title: "WE BUILT", body: "[smallest thing proving key assumption]" },
-      { n: "02", title: "WE DID NOT BUILD", body: "[tempting non-essential feature]" },
-      { n: "03", title: "BECAUSE", body: "[why this was the correct technical choice]" },
+      {
+        n: "01",
+        title: "WE BUILT",
+        body: "[smallest thing proving key assumption]",
+      },
+      {
+        n: "02",
+        title: "WE DID NOT BUILD",
+        body: "[tempting non-essential feature]",
+      },
+      {
+        n: "03",
+        title: "BECAUSE",
+        body: "[why this was the correct technical choice]",
+      },
     ],
     tech: "[Architecture / model / sensor / workflow in one defensible line]",
   },
@@ -104,6 +133,63 @@ export const story = {
    * chapters pin for N% of the viewport height ("scroll" values 100–300) and
    * visuals trail the scrollbar by ~0.75s (scrub: 0.75, expo.out).
    */
+  /*
+   * CHAOS. The fun layer on top of the design. Every item is optional.
+   *   chapter  which chapter it sits in (same keys as `highlights`)
+   *   x, y     centre position in % of that chapter (0–100), rotate in degrees
+   *   kinds    sticker { text, tone } · note { text } (handwritten)
+   *            doodle { shape, ink, size } · meme { image, caption, width }
+   *   tones    yellow · sky · blue · red · charcoal · white
+   * Memes: drop an image in /public and set image: "/meme.jpg". Items hide
+   * on phones (small screens get crowded) unless you set mobile: true.
+   */
+  chaos: {
+    enabled: true,
+    confetti: true, // bursts on "THANK YOU." (and when you click the startup name)
+    items: [
+      // 1 ─ Arrival
+      { chapter: "hero", kind: "sticker", text: "100% not a pitch deck", tone: "yellow", x: 76, y: 29, rotate: 8, mobile: true },
+      { chapter: "hero", kind: "doodle", shape: "arrow", ink: "yellow", x: 26, y: 72, rotate: -4, size: 90 },
+      { chapter: "hero", kind: "note", text: "yes, that's us", x: 24, y: 82, rotate: -9, delay: 0.3 },
+      // 2 ─ Reality
+      { chapter: "problem", kind: "sticker", text: "source: your grandma", tone: "red", x: 63, y: 20, rotate: -8 },
+      { chapter: "problem", kind: "doodle", shape: "zigzag", ink: "blue", x: 91, y: 86, rotate: -6, size: 110 },
+      // 3 ─ Insight
+      { chapter: "insight", kind: "meme", image: "", caption: "me, explaining the bottleneck", x: 84, y: 22, rotate: 6, width: 210 },
+      { chapter: "insight", kind: "doodle", shape: "star", ink: "yellow", x: 70, y: 9, rotate: 12, size: 64 },
+      // 4 ─ The bet
+      { chapter: "product", kind: "sticker", text: "built at 3 a.m.", tone: "blue", x: 10, y: 22, rotate: -10 },
+      { chapter: "product", kind: "note", text: "it works. mostly.", x: 86, y: 48, rotate: -7 },
+      { chapter: "product", kind: "doodle", shape: "arrow", ink: "red", x: 86, y: 60, rotate: 150, size: 90, delay: 0.2 },
+      // 5 ─ Demo
+      { chapter: "demo", kind: "sticker", text: "do not lick the demo", tone: "yellow", x: 83, y: 13, rotate: 7, mobile: true },
+      { chapter: "demo", kind: "doodle", shape: "star", ink: "sky", x: 9, y: 12, rotate: -14, size: 56 },
+      // 6 ─ Trade-offs
+      { chapter: "tradeoffs", kind: "doodle", shape: "forbidden", icon: Bird, ink: "red", x: 84, y: 13, rotate: -6, size: 140 },
+      { chapter: "tradeoffs", kind: "note", text: "no penguins allowed", x: 84, y: 22, rotate: -4, delay: 0.4 },
+      // 7 ─ Proof
+      { chapter: "proof", kind: "sticker", text: "peer-reviewed by our moms", tone: "red", x: 80, y: 13, rotate: -6 },
+      { chapter: "proof", kind: "doodle", shape: "circle", ink: "yellow", x: 9.5, y: 54, rotate: 0, size: 190 },
+      // 8 ─ Finale
+      {
+        chapter: "finale",
+        kind: "meme",
+        image: "",
+        caption: "thank you for listening to my presentation",
+        x: 76,
+        y: 84,
+        rotate: -5,
+        width: 230,
+      },
+      { chapter: "finale", kind: "sticker", text: "let's have some fun!!!", tone: "yellow", x: 88, y: 12, rotate: 9 },
+    ] satisfies ChaosItem[] as ChaosItem[],
+    // Crossed, scrolling tape between chapters. Speeds up when you scroll fast.
+    banners: [
+      { after: "insight", text: "LET'S DO FUN STUPID STUFF" },
+      { after: "tradeoffs", text: "IT WORKS ON MY MACHINE" },
+    ] satisfies ChaosBanner[] as ChaosBanner[],
+  },
+
   motion: {
     // "lenis": smooth wheel scrolling for the whole page, visuals follow it 1:1.
     // "scrub": native scrolling, and every pinned visual eases toward the scroll

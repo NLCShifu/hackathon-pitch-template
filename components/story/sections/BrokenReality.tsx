@@ -9,6 +9,7 @@ import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
 import { useMergedRef } from "../useMergedRef";
+import { ChaosLayer } from "../chaos/ChaosLayer";
 
 /** Free-flowing (unpinned) split: headline + context left, editorial photo right. */
 export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
@@ -30,6 +31,7 @@ export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
 
   return (
     <section id="story-problem" ref={setRef} data-chapter className="relative z-[1] px-6 py-[18svh] md:px-12">
+      <ChaosLayer chapter="problem" />
       <div className="mx-auto grid max-w-[1240px] items-center gap-12 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-7 md:pr-6">
           <ChapterMark n={2} />
@@ -46,7 +48,7 @@ export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
         </div>
 
         <motion.figure
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_#2a242066] md:col-span-5 md:-mt-24"
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_#13131366] md:col-span-5 md:-mt-24"
           style={reduced ? undefined : { clipPath, y: frameY }}
         >
           <motion.div className="absolute inset-[-10%_0]" style={reduced ? undefined : { y: photoY }}>
