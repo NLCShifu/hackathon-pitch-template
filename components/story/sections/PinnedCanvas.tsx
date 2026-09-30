@@ -16,15 +16,20 @@ import { ChapterMark } from "./ChapterMark";
  *   .10–.34  headline docks to the top; canvas tilts up out of perspective
  *   .22      sub-copy reveals under the headline
  *   .38–.74  feature pills float onto the canvas, one every .12
- *   .86–.96  pills and copy clear the stage for the demo chapter
+ *   .86–.96  pills and copy clear the stage for the next chapter
+ *
+ * Presentation beats: headline · canvas docks · one per pill.
  */
 export function PinnedCanvas() {
   return (
-    <PinnedSection id="story-product" scrollVh={story.motion.pin.canvas} restProgress={0.8} padded={false}>
+    <PinnedSection id="story-product" scrollVh={story.motion.pin.canvas} restProgress={0.8} beats={[0.14, 0.37, 0.47, 0.59, 0.71, 0.83]} padded={false}>
       <Stage />
     </PinnedSection>
   );
 }
+
+// Icon bubbles cycle through the palette (black icons on yellow/sky, white on blue/red).
+const PILL_TONES = ["bg-yellow text-black", "bg-blue text-white", "bg-sky text-black", "bg-red text-white"];
 
 // Pill anchor points, in % of the canvas box (they overhang its edges on purpose).
 const PILL_SLOTS = [
@@ -55,7 +60,7 @@ function Stage() {
         style={{ y: headY, scale: headScale, opacity: copyOut }}
         className="relative z-[2] w-full max-w-[980px] origin-top text-center"
       >
-        <ChapterMark n={4} className="justify-center" />
+        <ChapterMark n={5} className="justify-center" />
         <RevealWords as="h2" text={product.headline} className="story-line t-display mt-4" progress={p} at={0.02} duration={0.12} />
         <RevealWords
           as="p"
@@ -72,11 +77,11 @@ function Stage() {
           style={{ y: canvasY, rotateX, scale: canvasScale, opacity: canvasOpacity }}
           className="relative mx-auto aspect-[4/5] w-[min(100%,420px)] sm:aspect-[16/10] sm:w-[min(100%,1000px,calc((100svh_-_340px)*1.6))] origin-[50%_0%]"
         >
-          <div className="border-ink/10 bg-surface absolute inset-0 overflow-hidden rounded-[22px] border shadow-[0_60px_120px_-50px_#2a242080]">
+          <div className="border-ink/10 bg-surface absolute inset-0 overflow-hidden rounded-[22px] border shadow-[0_60px_120px_-50px_#13131366]">
             <div className="border-ink/10 flex h-9 items-center gap-1.5 border-b px-4" aria-hidden>
-              <i className="bg-ink/15 h-2.5 w-2.5 rounded-full" />
-              <i className="bg-ink/15 h-2.5 w-2.5 rounded-full" />
-              <i className="bg-ink/15 h-2.5 w-2.5 rounded-full" />
+              <i className="bg-red h-2.5 w-2.5 rounded-full" />
+              <i className="bg-yellow h-2.5 w-2.5 rounded-full" />
+              <i className="bg-blue h-2.5 w-2.5 rounded-full" />
             </div>
             <div className="text-ink absolute inset-x-0 top-9 bottom-0">
               <MediaFrame
@@ -114,9 +119,9 @@ function Pill({
   return (
     <motion.div
       style={{ ...PILL_SLOTS[index], opacity, scale, y }}
-      className="border-ink/10 bg-surface/90 text-ink absolute z-[3] flex max-w-[min(320px,46vw)] items-center gap-2.5 rounded-full border py-2 pr-4 pl-2 shadow-[0_18px_40px_-20px_#2a242066] backdrop-blur-md"
+      className="border-ink/10 bg-surface/90 text-ink absolute z-[3] flex max-w-[min(320px,46vw)] items-center gap-2.5 rounded-full border py-2 pr-4 pl-2 shadow-[0_18px_40px_-20px_#13131366] backdrop-blur-md"
     >
-      <span className="bg-accent-tint text-accent-deep grid h-8 w-8 shrink-0 place-items-center rounded-full">
+      <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${PILL_TONES[index % PILL_TONES.length]}`}>
         <Icon className="h-4 w-4" strokeWidth={1.8} aria-hidden />
       </span>
       <span className="text-[13px] leading-tight font-semibold">

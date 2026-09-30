@@ -27,7 +27,7 @@ export function MediaFrame({ src, label, configKey, className = "", sizes = "100
   return (
     <div className={`placeholder-frame flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center ${className}`}>
       <ImagePlus className="h-7 w-7 opacity-50" strokeWidth={1.5} aria-hidden />
-      <span className="font-mono text-[11px] tracking-[0.16em] uppercase opacity-80">
+      <span className="font-mono text-[11px] tracking-[0.16em] uppercase">
         <Ph text={label} />
       </span>
       <span className="font-mono text-[10px] tracking-[0.12em] opacity-45">/public → story.config.ts › {configKey}</span>

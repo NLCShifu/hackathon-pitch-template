@@ -32,7 +32,7 @@ export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
     <section id="story-problem" ref={setRef} data-chapter className="relative z-[1] px-6 py-[18svh] md:px-12">
       <div className="mx-auto grid max-w-[1240px] items-center gap-12 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-7 md:pr-6">
-          <ChapterMark n={2} />
+          <ChapterMark n={3} />
           <RevealWords as="h2" text={problem.headline} className="story-line t-display mt-6" duration={0.9} />
           <motion.p
             className="t-caption text-ink-soft mt-10 md:ml-[12%]"
@@ -46,7 +46,7 @@ export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
         </div>
 
         <motion.figure
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_#2a242066] md:col-span-5 md:-mt-24"
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_#13131366] md:col-span-5 md:-mt-24"
           style={reduced ? undefined : { clipPath, y: frameY }}
         >
           <motion.div className="absolute inset-[-10%_0]" style={reduced ? undefined : { y: photoY }}>

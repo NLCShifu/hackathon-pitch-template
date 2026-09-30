@@ -9,13 +9,21 @@ import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 
 // Decorative glyphs orbiting the title (Whisper `.story-open-glyph`). Positions in % of the stage.
-const GLYPHS: { Icon: LucideIcon; x: number; y: number; size: number; delay: number }[] = [
-  { Icon: MessageCircle, x: 12, y: 20, size: 44, delay: 0 },
-  { Icon: Sparkles, x: 84, y: 16, size: 48, delay: 1.4 },
-  { Icon: Layers, x: 78, y: 74, size: 42, delay: 0.7 },
-  { Icon: Zap, x: 17, y: 78, size: 46, delay: 2.4 },
-  { Icon: Timer, x: 46, y: 8, size: 38, delay: 3.1 },
-  { Icon: Compass, x: 62, y: 90, size: 40, delay: 2 },
+// Tiles use the palette as fills; icons are black on yellow/sky, white on blue/red/charcoal.
+const TONES = {
+  blue: "bg-blue text-white",
+  sky: "bg-sky text-black",
+  yellow: "bg-yellow text-black",
+  red: "bg-red text-white",
+  charcoal: "bg-charcoal text-white border border-white/15",
+} as const;
+const GLYPHS: { Icon: LucideIcon; x: number; y: number; size: number; delay: number; tone: keyof typeof TONES }[] = [
+  { Icon: MessageCircle, x: 12, y: 20, size: 44, delay: 0, tone: "blue" },
+  { Icon: Sparkles, x: 84, y: 16, size: 48, delay: 1.4, tone: "yellow" },
+  { Icon: Layers, x: 78, y: 74, size: 42, delay: 0.7, tone: "red" },
+  { Icon: Zap, x: 17, y: 78, size: 46, delay: 2.4, tone: "sky" },
+  { Icon: Timer, x: 46, y: 8, size: 38, delay: 3.1, tone: "charcoal" },
+  { Icon: Compass, x: 62, y: 90, size: 40, delay: 2, tone: "blue" },
 ];
 
 export function HeroIntro() {
@@ -56,13 +64,13 @@ function Stage() {
         <motion.p
           className="eyebrow mb-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1"
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 0.62, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1, ease: bz("power2Out") }}
         >
           <span>
             <Ph text={hero.eyebrow} />
           </span>
-          <span aria-hidden className="text-accent-lift">
+          <span aria-hidden className="text-cream-faint">
             //
           </span>
           <span>
@@ -93,7 +101,16 @@ function Stage() {
   );
 }
 
-function Glyph({ Icon, x, y, size, delay, index, progress }: (typeof GLYPHS)[number] & { index: number; progress: MotionValue<number> }) {
+function Glyph({
+  Icon,
+  x,
+  y,
+  size,
+  delay,
+  tone,
+  index,
+  progress,
+}: (typeof GLYPHS)[number] & { index: number; progress: MotionValue<number> }) {
   // Whisper: glyphs fade out at 0.82 of the opening pin, staggered by 0.02.
   const opacity = useTransform(progress, [0.62 + index * 0.02, 0.74 + index * 0.02], [1, 0]);
   const drift = useTransform(progress, [0, 1], [0, (index % 2 ? -1 : 1) * 60]);
@@ -106,7 +123,7 @@ function Glyph({ Icon, x, y, size, delay, index, progress }: (typeof GLYPHS)[num
         transition={{ duration: 1.1, delay: 0.2 + index * 0.09, ease: bz("power2Out") }}
       >
         <span
-          className="animate-drift border-cream/15 bg-cream/[0.06] text-cream-dim flex items-center justify-center rounded-[14px] border shadow-[inset_0_1px_0_#ffffff14] backdrop-blur-sm"
+          className={`animate-drift flex items-center justify-center rounded-[14px] shadow-[0_14px_30px_-14px_#000000cc] ${TONES[tone]}`}
           style={{ width: size, height: size, animationDelay: `${-delay}s` }}
         >
           <Icon className="h-[42%] w-[42%]" strokeWidth={1.6} />

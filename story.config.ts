@@ -2,100 +2,136 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  EDIT THIS FILE ONLY.  Replace every [BRACKETED PLACEHOLDER] with your copy.
  *
- *  • Bracketed text renders with a dashed underline in the accent colour, so
- *    you can see at a glance what is still unfilled. Filled text renders plain.
- *  • Wrap words in {curly braces} to paint them in the accent colour on purpose,
- *    e.g. "SO WE BUILT {Nimbus}."
+ *  • {Curly braces} are the yellow highlighter: black text on a yellow marker.
+ *    It is a design choice, not a placeholder marker. Keep the braces when you
+ *    swap in your copy, e.g. "[USER] SHOULD…" → "{Night nurses} SHOULD…".
+ *    Use it sparingly: one key phrase per headline reads best.
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
- *    .mp4 / .webm paths render as muted autoplay loops.
+ *    .mp4 / .webm paths render as muted autoplay loops (except demo.video,
+ *    which waits for a click and plays with sound).
  * ─────────────────────────────────────────────────────────────────────────
  */
-import { Gauge, Layers, ShieldCheck, Sparkles } from "lucide-react";
+import { Gauge, Globe, Quote, TriangleAlert } from "lucide-react";
 
 export const story = {
+  /*
+   * YELLOW HIGHLIGHTS. The only place that decides what turns yellow.
+   * List the exact words (case-sensitive) per chapter; every match in that
+   * chapter becomes black text on a yellow marker. [] = no yellow.
+   * When you rewrite a headline, update its phrase here too.
+   */
+  highlights: {
+    hero: ["HYLITE"],
+    demo: [],
+    problem: ["EMPLOYEES"],
+    insight: ["ANOTHER HR CHATBOT", "TRUST"],
+    product: ["HYLITE"],
+    tradeoffs: ["ON PURPOSE", "WE BUILT", "WE DID NOT BUILD", "BECAUSE"],
+    proof: ["PROTOTYPE"],
+    finale: ["ANSWERS YOU CAN CITE"],
+  } satisfies Record<string, string[]>,
+
   meta: {
-    title: "[STARTUP NAME]",
-    description: "[The clear human outcome you create.]",
+    title: "HYLITE",
+    description: "Your personal HR paralegal. Exact answers, highlighted.",
   },
 
   /* 1 ─ Arrival */
   hero: {
     eyebrow: "NOT A PITCH. A WORKING BET.",
-    team: "A [TEAM NAME] project",
-    name: "[STARTUP NAME]",
-    tagline: "[The clear human outcome you create.]",
+    team: "A ELEKTRISCH VUUR project",
+    name: "HYLITE",
+    tagline: "HR answers straight from the source.",
     scrollHint: "Scroll",
   },
 
-  /* 2 ─ The broken reality */
+  /* 2 ─ Proof in motion (right after the title) */
+  demo: {
+    action: "WATCH THE DEMO",
+    frameLabel: "HYLITE IN ACTION",
+    //image: "", // poster still shown before playback, e.g. "/demo.png"
+    // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
+    video: "",
+    //plan: "Live demo plan: [one sentence]. Backup: [recorded clip / screenshot].",
+  },
+
+  /* 3 ─ The broken reality */
   problem: {
-    headline: "[USER] SHOULD NOT HAVE TO [PAINFUL THING].",
-    context: "[Describe the exact moment: what happens, what they do today, and what it costs.]",
-    photoLabel: "[REAL-WORLD PROBLEM PHOTO]",
+    headline: "EMPLOYEES SHOULD NOT HAVE TO DIG FOR THEIR RIGHTS.",
+    context:
+      "Contracts, handbooks, emails and labour law. They disagree, and the right answer gets buried.",
+    photoLabel: "CONTRACT · HR HANDBOOK · EMAILS · LABOUR LAW",
     image: "", // e.g. "/problem.jpg"
   },
 
-  /* 3 ─ Bottleneck & non-obvious insight */
+  /* 4 ─ Bottleneck & non-obvious insight */
   insight: {
-    headline: "WE DIDN’T BUILD [THE OBVIOUS SOLUTION].",
-    because: "Because [why it still fails the user].",
-    steps: ["[CURRENT WORKAROUND]", "[THE ACTUAL BOTTLENECK]", "[YOUR INSIGHT]"],
-    banner: "THE REAL BOTTLENECK IS [YOUR NON-OBVIOUS INSIGHT].",
+    headline: "WE DIDN’T BUILD ANOTHER HR CHATBOT.",
+    because: "Because a paraphrase is not proof.",
+    steps: [
+      "TODAY: SEARCHING PDFs AND EMAILS BY HAND",
+      "PROBLEM: SOURCES CONTRADICT EACH OTHER",
+      "OUR FIX: SHOW THE EXACT SOURCE TEXT",
+    ],
+    banner: "THE REAL BOTTLENECK IS TRUST.",
   },
 
-  /* 4 ─ The product bet (pinned canvas) */
+  /* 5 ─ The product bet (pinned canvas) */
   product: {
-    headline: "SO WE BUILT [STARTUP NAME].",
-    line: "We help [specific user] achieve [concrete outcome] by [how it works—in plain English].",
-    heroLabel: "[YOUR PRODUCT / PROTOTYPE HERO IMAGE]",
+    headline: "SO WE BUILT HYLITE.",
+    line: "Ask a question. Get the exact paragraph, highlighted.",
+    heroLabel: "YELLOW = ANSWER · RED = CONFLICT",
     image: "", // e.g. "/hero.png"
     // Up to 4 callouts float over the canvas as you scroll. Swap icons from lucide.dev/icons.
     pills: [
-      { icon: Sparkles, text: "[FEATURE CALLOUT 1]" },
-      { icon: Gauge, text: "[FEATURE CALLOUT 2]" },
-      { icon: ShieldCheck, text: "[FEATURE CALLOUT 3]" },
-      { icon: Layers, text: "[FEATURE CALLOUT 4]" },
+      { icon: Quote, text: "REAL QUOTES, NO AI-WRITTEN ANSWERS" },
+      { icon: Gauge, text: "LAW FIRST, NEWEST FIRST" },
+      { icon: TriangleAlert, text: "CONTRADICTIONS MARKED IN RED" },
+      { icon: Globe, text: "ADDS THE LAW OF YOUR COUNTRY" },
     ],
-  },
-
-  /* 5 ─ Proof in motion */
-  demo: {
-    action: "[State the demo action—not its feature name.]",
-    frameLabel: "[LARGE DEMO SCREENSHOT / VIDEO STILL]",
-    image: "", // e.g. "/demo.png" or "/demo.mp4"
-    plan: "Live demo plan: [one sentence]. Backup: [recorded clip / screenshot].",
   },
 
   /* 6 ─ Intentional trade-offs */
   tradeoffs: {
     headline: "WE MADE THESE TRADE-OFFS ON PURPOSE.",
     cards: [
-      { n: "01", title: "WE BUILT", body: "[smallest thing proving key assumption]" },
-      { n: "02", title: "WE DID NOT BUILD", body: "[tempting non-essential feature]" },
-      { n: "03", title: "BECAUSE", body: "[why this was the correct technical choice]" },
+      {
+        n: "01",
+        title: "WE BUILT",
+        body: "A search that returns exact paragraphs: the answer in yellow, conflicts in red.",
+      },
+      {
+        n: "02",
+        title: "WE DID NOT BUILD",
+        body: "A real database yet. A mock reads 5 sample folders so we could test fast.",
+      },
+      {
+        n: "03",
+        title: "BECAUSE",
+        body: "The big question is trust in quoted sources. The database plugs in later.",
+      },
     ],
-    tech: "[Architecture / model / sensor / workflow in one defensible line]",
+    tech: "Node.js + React, one shared TypeScript API.",
   },
 
   /* 7 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
   proof: {
-    headline: "WHAT WE PROVED IN [X HOURS].",
+    headline: "WHAT OUR PROTOTYPE DOES TODAY.",
     stats: [
-      { value: "[X]", label: "tests/users" },
-      { value: "[Y]", label: "key output" },
-      { value: "[Z]", label: "seconds / % / result" },
+      { value: "5", label: "HR topics searched" },
+      { value: "4", label: "ranking signals: law, date, match, tone" },
+      { value: "0", label: "AI-written sentences" },
     ],
-    learned: "What we learned: [One honest result. What worked + next constraint].",
+    learned:
+      "Type a question, get ranked quotes from your documents with the answer highlighted.",
   },
 
   /* 8 ─ Horizon & the ask */
   finale: {
-    headline: "WE ARE TURNING [OLD PAINFUL REALITY] INTO [A BETTER FUTURE].",
-    ask: "THE ASK: [pilot / intro / access / mentorship / prize]",
-    milestone: "Next milestone: [specific experiment or build by concrete time]",
-    qrUrl: "", // e.g. "https://your-demo.app" → renders a live QR code
-    qrImage: "", // or a pre-made QR image, e.g. "/qr.png"
-    qrLabel: "[QR CODE]",
+    headline: "WE ARE TURNING HR GUESSWORK INTO ANSWERS YOU CAN CITE.",
+    ask: "THE ASK: A COMPANY TO TEST HYLITE ON ITS REAL HR DOCUMENTS.",
+    milestone:
+      "Next milestone: connect the real database.",
     thanks: "THANK YOU.",
   },
 

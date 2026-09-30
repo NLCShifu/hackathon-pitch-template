@@ -20,6 +20,8 @@ type Props = {
   scrollVh: number;
   /** Progress to freeze at when the visitor prefers reduced motion (the "resting" composition). */
   restProgress?: number;
+  /** Presentation mode: progress points each arrow press stops at (defaults to `restProgress` alone). */
+  beats?: number[];
   className?: string;
   /** Whisper stage padding: clamp(52px, 6.5vh, 92px) top and bottom. */
   padded?: boolean;
@@ -34,7 +36,7 @@ type Props = {
  * so timeline positions read as fractions of the pin, like GSAP's
  * normalised `chapterTimeline`.
  */
-export function PinnedSection({ id, scrollVh, restProgress = 1, className = "", padded = true, ref, children }: Props) {
+export function PinnedSection({ id, scrollVh, restProgress = 1, beats, className = "", padded = true, ref, children }: Props) {
   const reduced = usePrefersReducedMotion();
   const [local, setRef] = useMergedRef(ref);
 
@@ -48,6 +50,8 @@ export function PinnedSection({ id, scrollVh, restProgress = 1, className = "", 
       id={id}
       ref={setRef}
       data-chapter
+      data-rest={reduced ? undefined : restProgress}
+      data-beats={reduced || !beats ? undefined : beats.join(",")}
       className={`relative z-[1] ${className}`}
       style={{ height: reduced ? "auto" : `calc(100svh + ${scrollVh}svh)` }}
     >
