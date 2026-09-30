@@ -27,9 +27,15 @@ const CHAPTERS: Chapter[] = [
   { id: "story-ask", label: "The ask" },
 ];
 
-// Text + placeholder colours per ground: night → paper → warm.
-const INK = { night: "#f6f1e9", paper: "#2a2420", warm: "#fdf6ef" };
-const PH = { night: "#e2864a", paper: "#ca6833", warm: "#ffdcc0" };
+// Colours per ground: night (black) → paper (white) → warm (brand blue).
+const INK = { night: "#ffffff", paper: "#131313", warm: "#ffffff" };
+// {accent} words: red text on white; white text on a red chip on black / blue.
+const ACCENT_FG = { night: "#ffffff", paper: "#c23b21", warm: "#ffffff" };
+const ACCENT_BG = { night: "rgba(194, 59, 33, 1)", paper: "rgba(194, 59, 33, 0)", warm: "rgba(194, 59, 33, 1)" };
+// Progress bar + active rail dot (shapes, never text): whichever palette colour pops on the ground.
+const SIGNAL = { night: "#ffd301", paper: "#264ed0", warm: "#ffd301" };
+
+type Stops = { night: string; paper: string; warm: string };
 
 export function StoryPage() {
   const problemRef = useRef<HTMLElement>(null);
@@ -41,21 +47,26 @@ export function StoryPage() {
   const paper = useScrub(toPaper);
   const warm = useScrub(toWarm);
 
-  const ink = useTransform([paper, warm], ([a, b]: number[]) =>
-    b > 0 ? transform(b, [0, 1], [INK.paper, INK.warm]) : transform(a, [0, 1], [INK.night, INK.paper]),
-  );
-  const ph = useTransform([paper, warm], ([a, b]: number[]) =>
-    b > 0 ? transform(b, [0, 1], [PH.paper, PH.warm]) : transform(a, [0, 1], [PH.night, PH.paper]),
-  );
+  const byGround =
+    (c: Stops) =>
+    ([a, b]: number[]) =>
+      b > 0 ? transform(b, [0, 1], [c.paper, c.warm]) : transform(a, [0, 1], [c.night, c.paper]);
+  const ink = useTransform([paper, warm], byGround(INK));
+  const accentFg = useTransform([paper, warm], byGround(ACCENT_FG));
+  const accentBg = useTransform([paper, warm], byGround(ACCENT_BG));
+  const signal = useTransform([paper, warm], byGround(SIGNAL));
 
   return (
     // reducedMotion="user": Framer drops transform/layout animations for visitors who ask.
     <MotionConfig reducedMotion="user">
       <SmoothScroll />
       <Ground paper={paper} warm={warm} />
-      <Chrome chapters={CHAPTERS} ink={ink} scrollHint={story.hero.scrollHint} />
+      <Chrome chapters={CHAPTERS} ink={ink} signal={signal} scrollHint={story.hero.scrollHint} />
       {/* overflow-x: clip (not hidden) so position: sticky keeps working */}
-      <motion.main className="relative overflow-x-clip" style={{ color: ink, "--ph": ph } as MotionStyle}>
+      <motion.main
+        className="relative overflow-x-clip"
+        style={{ color: ink, "--accent-fg": accentFg, "--accent-bg": accentBg } as MotionStyle}
+      >
         <HeroIntro />
         <BrokenReality ref={problemRef} />
         <InsightDrift />

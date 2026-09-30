@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useTransform, type MotionStyle, type MotionValue } from "framer-motion";
+import { motion, useTransform, type MotionStyle, type MotionValue, type Variants } from "framer-motion";
 import { bz, ease, staggerEach, usePrefersReducedMotion } from "./motion";
 import { PartSpan, toWords, type Word } from "./text";
 
@@ -59,6 +59,7 @@ export function RevealWords(props: ScrollLinked | Triggered) {
   if (props.progress) return <ScrubbedWords {...props} words={words} Tag={Tag} />;
 
   const duration = props.duration ?? 0.9;
+  const joins = placeholderJoins(words);
   const MotionTag = motionTag(Tag);
   return (
     <MotionTag
@@ -73,14 +74,14 @@ export function RevealWords(props: ScrollLinked | Triggered) {
     >
       {words.map((w, i) => (
         <Fragment2 key={i} first={i === 0}>
-          <span className="word-mask">
-            <motion.span
-              className="inline-block will-change-transform"
+          {/* The wrapper is the stagger child; its part masks inherit its timing. */}
+          <motion.span className="whitespace-nowrap" variants={{ hidden: {}, show: {} }}>
+            <MaskedParts
+              word={w}
+              joinPrev={joins[i]}
               variants={{ hidden: { y: "118%" }, show: { y: "0%", transition: { duration, ease: bz("power3Out") } } }}
-            >
-              <WordParts word={w} />
-            </motion.span>
-          </span>
+            />
+          </motion.span>
         </Fragment2>
       ))}
     </MotionTag>
@@ -89,6 +90,7 @@ export function RevealWords(props: ScrollLinked | Triggered) {
 
 function ScrubbedWords({ words, Tag, progress, at, duration, out, className, style }: ScrollLinked & { words: Word[]; Tag: Tag }) {
   const each = staggerEach(duration, words.length);
+  const joins = placeholderJoins(words);
   const exitOpacity = useTransform(progress, out ?? [2, 3], [1, 0], { ease: ease.power1In });
   const exitY = useTransform(progress, out ?? [2, 3], [0, -18], { ease: ease.power1In });
   // autoAlpha: hidden until the reveal starts, so stacked lines don't catch clicks.
@@ -99,22 +101,56 @@ function ScrubbedWords({ words, Tag, progress, at, duration, out, className, sty
     <MotionTag className={className} style={{ ...style, opacity: exitOpacity, y: exitY, visibility }}>
       {words.map((w, i) => (
         <Fragment2 key={i} first={i === 0}>
-          <ScrubWord word={w} progress={progress} start={at + i * each} duration={duration} />
+          <ScrubWord word={w} joinPrev={joins[i]} progress={progress} start={at + i * each} duration={duration} />
         </Fragment2>
       ))}
     </MotionTag>
   );
 }
 
-function ScrubWord({ word, progress, start, duration }: { word: Word; progress: MotionValue<number>; start: number; duration: number }) {
+function ScrubWord({
+  word,
+  joinPrev,
+  progress,
+  start,
+  duration,
+}: {
+  word: Word;
+  joinPrev: boolean;
+  progress: MotionValue<number>;
+  start: number;
+  duration: number;
+}) {
   const y = useTransform(progress, [start, start + duration], ["118%", "0%"], { ease: ease.power3Out });
   return (
-    <span className="word-mask">
-      <motion.span className="inline-block will-change-transform" style={{ y }}>
-        <WordParts word={word} />
-      </motion.span>
+    <span className="whitespace-nowrap">
+      <MaskedParts word={word} joinPrev={joinPrev} y={y} />
     </span>
   );
+}
+
+/**
+ * One clip mask per part, so a [placeholder] highlight sits on the mask box
+ * itself: every chip is exactly one line tall and neighbouring placeholder
+ * words join into one continuous marker bar (see `.ph-mask` in globals.css).
+ */
+function MaskedParts({ word, joinPrev, y, variants }: { word: Word; joinPrev: boolean; y?: MotionValue<string>; variants?: Variants }) {
+  return (
+    <>
+      {word.map((part, j) => (
+        <span key={j} className={`word-mask ${part.kind === "ph" ? "ph-mask" : ""} ${j === 0 && joinPrev ? "ph-join" : ""}`}>
+          <motion.span className="inline-block will-change-transform" style={y ? { y } : undefined} variants={variants}>
+            <PartSpan part={part} />
+          </motion.span>
+        </span>
+      ))}
+    </>
+  );
+}
+
+/** True for each word that continues a placeholder from the previous word. */
+function placeholderJoins(words: Word[]) {
+  return words.map((w, i) => i > 0 && w[0].kind === "ph" && words[i - 1][words[i - 1].length - 1].kind === "ph");
 }
 
 function WordParts({ word }: { word: Word }) {

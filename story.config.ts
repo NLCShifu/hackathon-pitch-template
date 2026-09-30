@@ -2,10 +2,10 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  EDIT THIS FILE ONLY.  Replace every [BRACKETED PLACEHOLDER] with your copy.
  *
- *  • Bracketed text renders with a dashed underline in the accent colour, so
- *    you can see at a glance what is still unfilled. Filled text renders plain.
- *  • Wrap words in {curly braces} to paint them in the accent colour on purpose,
- *    e.g. "SO WE BUILT {Nimbus}."
+ *  • Bracketed text renders as black text on a yellow highlighter, so you can
+ *    see at a glance what is still unfilled. Filled text renders plain.
+ *  • Wrap words in {curly braces} to accent them on purpose (red on white
+ *    sections, white on a red chip on dark/blue ones), e.g. "SO WE BUILT {Nimbus}."
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
  *    .mp4 / .webm paths render as muted autoplay loops.
  * ─────────────────────────────────────────────────────────────────────────

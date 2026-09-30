@@ -21,7 +21,7 @@ export function ProofStats() {
           {proof.stats.map((s, i) => (
             <div key={i} className="relative pt-7">
               <motion.span
-                className="bg-ink/25 absolute inset-x-0 top-0 h-px origin-left"
+                className={`absolute inset-x-0 top-0 h-[3px] origin-left ${RULE_TONES[i % RULE_TONES.length]}`}
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true, amount: 1 }}
@@ -43,10 +43,10 @@ export function ProofStats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.7 }}
           transition={{ duration: 0.9, ease: bz("power3Out") }}
-          className="border-hairline bg-surface text-ink [--ph:#ca6833] relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
+          className="border-hairline bg-surface text-ink [--accent-fg:#c23b21] [--accent-bg:transparent] relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
         >
-          <span className="bg-accent absolute inset-y-0 left-0 w-1" aria-hidden />
-          <span className="bg-accent-tint text-accent-deep grid h-11 w-11 shrink-0 place-items-center rounded-full">
+          <span className="bg-blue absolute inset-y-0 left-0 w-1" aria-hidden />
+          <span className="bg-yellow grid h-11 w-11 text-black shrink-0 place-items-center rounded-full">
             <Lightbulb className="h-5 w-5" strokeWidth={1.7} aria-hidden />
           </span>
           <p className="t-caption !max-w-[60ch] text-[clamp(1.1rem,1.7vw,1.35rem)]">
@@ -57,6 +57,9 @@ export function ProofStats() {
     </section>
   );
 }
+
+// Stat rules cycle through the palette.
+const RULE_TONES = ["bg-blue", "bg-red", "bg-yellow"];
 
 const NUMERIC = /^(\D*?)(\d[\d,]*(?:\.\d+)?)(.*)$/;
 

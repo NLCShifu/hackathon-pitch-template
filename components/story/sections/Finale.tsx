@@ -35,7 +35,7 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
             {...rise()}
             className="border-on-accent/25 bg-on-accent/[0.08] rounded-[26px] border p-7 backdrop-blur-sm md:col-span-8 md:p-10"
           >
-            <p className="eyebrow flex items-center gap-2.5 !opacity-80">
+            <p className="eyebrow flex items-center gap-2.5">
               <Handshake className="h-4 w-4" strokeWidth={1.8} aria-hidden />
               {askRest.length ? askLabel : "THE ASK"}
             </p>
@@ -52,13 +52,13 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
           </motion.div>
 
           <motion.figure {...rise(0.12)} className="flex flex-col items-center justify-center gap-4 md:col-span-4">
-            <div className="text-ink relative rounded-[26px] bg-white p-5 shadow-[0_40px_80px_-40px_#3d1a0899]">
+            <div className="text-ink relative rounded-[26px] bg-white p-5 shadow-[0_40px_80px_-40px_#0b1a5299]">
               <Corners />
               <div className="relative grid h-[clamp(150px,18vw,210px)] w-[clamp(150px,18vw,210px)] place-items-center">
                 <QrSlot />
               </div>
             </div>
-            <figcaption className="eyebrow !opacity-80">
+            <figcaption className="eyebrow">
               <Ph text={finale.qrLabel} />
             </figcaption>
           </motion.figure>
@@ -85,7 +85,7 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
 
 function QrSlot() {
   const { qrUrl, qrImage } = story.finale;
-  if (qrUrl) return <QRCodeSVG value={qrUrl} className="h-full w-full" bgColor="transparent" fgColor="#2a2420" level="M" />;
+  if (qrUrl) return <QRCodeSVG value={qrUrl} className="h-full w-full" bgColor="transparent" fgColor="#131313" level="M" />;
   if (qrImage) return <Image src={qrImage} alt="QR code" fill sizes="210px" className="object-contain" />;
   return (
     <div className="placeholder-frame text-ink flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl">

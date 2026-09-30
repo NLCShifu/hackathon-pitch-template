@@ -1,6 +1,6 @@
 # Web Story Template
 
-A continuous-scroll product manifesto for hackathon teams. Its typography and motion follow askwhisper.com/story. It is one vertical flow, not a slide deck: chapters pin, type morphs, and one shared background turns from night to paper to warm as you scroll.
+A continuous-scroll product manifesto for hackathon teams. Its typography and motion follow askwhisper.com/story. It is one vertical flow, not a slide deck: chapters pin, type morphs, and one shared background turns from black to white to brand blue as you scroll.
 
 **Stack:** Next.js 16 (App Router), React 19, Tailwind CSS 4, Framer Motion 13, Lenis, Lucide, qrcode.react
 
@@ -13,10 +13,10 @@ npm run build && npm start
 ## Fill it in (≈10 minutes)
 
 1. Open **`story.config.ts`**. It is the only file you need to edit.
-2. Replace every `[BRACKETED PLACEHOLDER]`. Unfilled brackets show in the accent colour with a dashed underline, so you can see what's left at a glance.
+2. Replace every `[BRACKETED PLACEHOLDER]`. Unfilled brackets show as black text on a yellow highlighter, so you can see what's left at a glance.
 3. Put images in `/public` and set `image: "/your-file.jpg"`. `.mp4` and `.webm` files play as muted loops.
 4. Set `finale.qrUrl` to your demo link and the QR code is generated for you.
-5. Optional: wrap words in `{curly braces}` to colour them with the accent on purpose.
+5. Optional: wrap words in `{curly braces}` to accent them on purpose: red text on white sections, a white-on-red chip on dark and blue ones.
 
 ## File map
 
@@ -60,6 +60,14 @@ components/story/
 - Sizes: `clamp(2.85rem, 9.4vw, 7.5rem)` (hero), `clamp(1.78rem, 4.6vw, 3.6rem)` (lead), `clamp(1.62rem, 3.7vw, 3rem)` (section).
 - Body: Urbanist 500, 1.55 line-height.
 - Eyebrows: 12px, `0.19em` tracking, uppercase. They use JetBrains Mono because Whisper's page has no monospaced face.
+
+## Colour
+
+Palette: blue `#264ed0` · sky `#5dadeb` · yellow `#ffd301` · red `#c23b21` · charcoal `#333333` · black `#131313`, plus white. Tokens live in `app/globals.css`.
+
+- **Grounds:** black (arrival) → white (chapters 2–7) → blue (finale). Text flips between white and black to match.
+- **Yellow and sky are never text colours.** They are used as fills: placeholder highlights, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
+- Red, blue and charcoal carry text colour on white (counters, accents). On black or blue grounds, accents switch to white on a red chip.
 
 ## Tuning
 
