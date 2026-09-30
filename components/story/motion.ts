@@ -16,9 +16,10 @@ export const BEZIER = {
 } as const;
 
 type BezierName = keyof typeof BEZIER;
-export const ease = Object.fromEntries(
-  Object.entries(BEZIER).map(([k, [a, b, c, d]]) => [k, cubicBezier(a, b, c, d)]),
-) as Record<BezierName, (t: number) => number>;
+export const ease = Object.fromEntries(Object.entries(BEZIER).map(([k, [a, b, c, d]]) => [k, cubicBezier(a, b, c, d)])) as Record<
+  BezierName,
+  (t: number) => number
+>;
 
 /** Mutable tuple copy for Framer `transition.ease`. */
 export const bz = (name: BezierName) => [...BEZIER[name]] as [number, number, number, number];
@@ -57,5 +58,9 @@ const subscribe = (cb: () => void) => {
  * render the full-motion tree, then React re-renders with the real preference.
  */
 export function usePrefersReducedMotion() {
-  return useSyncExternalStore(subscribe, () => window.matchMedia(REDUCED).matches, () => false);
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(REDUCED).matches,
+    () => false,
+  );
 }

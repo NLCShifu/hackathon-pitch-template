@@ -20,7 +20,7 @@ import { ChapterMark } from "./ChapterMark";
  */
 export function DemoFrame() {
   return (
-    <PinnedSection id="story-demo" scrollVh={story.motion.pin.demo} restProgress={1} padded={false}>
+    <PinnedSection id="story-demo" chapter="demo" scrollVh={story.motion.pin.demo} restProgress={1} padded={false}>
       <Stage />
     </PinnedSection>
   );
@@ -60,9 +60,7 @@ function Stage() {
           aria-hidden
         />
 
-        <div
-          className="absolute inset-x-0 bottom-[clamp(96px,16vh,150px)] px-6 md:px-12"
-        >
+        <div className="absolute inset-x-0 bottom-[clamp(96px,16vh,150px)] px-6 md:px-12">
           <div className="flex max-w-[1100px] items-end gap-5">
             <motion.span
               style={{ opacity: scrim }}

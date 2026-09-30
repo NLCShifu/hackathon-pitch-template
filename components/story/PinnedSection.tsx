@@ -4,6 +4,8 @@ import { createContext, useContext, useLayoutEffect, useRef, type ReactNode, typ
 import { useMotionValue, useScroll, type MotionValue } from "framer-motion";
 import { useScrub, usePrefersReducedMotion } from "./motion";
 import { useMergedRef } from "./useMergedRef";
+import { ChaosLayer } from "./chaos/ChaosLayer";
+import type { ChapterKey } from "./chaos/types";
 
 const PinContext = createContext<MotionValue<number> | null>(null);
 
@@ -24,6 +26,8 @@ type Props = {
   /** Whisper stage padding: clamp(52px, 6.5vh, 92px) top and bottom. */
   padded?: boolean;
   ref?: Ref<HTMLElement>;
+  /** Chapter key for the chaos layer (stickers, doodles, memes). */
+  chapter?: ChapterKey;
   children: ReactNode;
 };
 
@@ -34,7 +38,7 @@ type Props = {
  * so timeline positions read as fractions of the pin, like GSAP's
  * normalised `chapterTimeline`.
  */
-export function PinnedSection({ id, scrollVh, restProgress = 1, className = "", padded = true, ref, children }: Props) {
+export function PinnedSection({ id, scrollVh, restProgress = 1, className = "", padded = true, ref, chapter, children }: Props) {
   const reduced = usePrefersReducedMotion();
   const [local, setRef] = useMergedRef(ref);
 
@@ -56,6 +60,7 @@ export function PinnedSection({ id, scrollVh, restProgress = 1, className = "", 
           padded && !reduced ? "py-[clamp(52px,6.5vh,92px)]" : ""
         }`}
       >
+        {chapter && <ChaosLayer chapter={chapter} />}
         <PinContext.Provider value={progress}>{reduced ? children : <Fit>{children}</Fit>}</PinContext.Provider>
       </div>
     </section>

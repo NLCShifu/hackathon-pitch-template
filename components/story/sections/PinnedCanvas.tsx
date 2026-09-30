@@ -20,7 +20,7 @@ import { ChapterMark } from "./ChapterMark";
  */
 export function PinnedCanvas() {
   return (
-    <PinnedSection id="story-product" scrollVh={story.motion.pin.canvas} restProgress={0.8} padded={false}>
+    <PinnedSection id="story-product" chapter="product" scrollVh={story.motion.pin.canvas} restProgress={0.8} padded={false}>
       <Stage />
     </PinnedSection>
   );

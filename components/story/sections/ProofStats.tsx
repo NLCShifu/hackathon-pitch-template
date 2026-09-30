@@ -8,11 +8,13 @@ import { bz, ease, usePrefersReducedMotion } from "../motion";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
+import { ChaosLayer } from "../chaos/ChaosLayer";
 
 export function ProofStats() {
   const { proof } = story;
   return (
     <section id="story-proof" data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
+      <ChaosLayer chapter="proof" />
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={7} />
         <RevealWords as="h2" text={proof.headline} className="story-line t-display mt-6 max-w-[18ch]" duration={0.9} />

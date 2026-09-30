@@ -7,6 +7,7 @@ import { bz, ease } from "../motion";
 import { PinnedSection, usePin } from "../PinnedSection";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
+import { useConfetti } from "../chaos/Confetti";
 
 // Decorative glyphs orbiting the title (Whisper `.story-open-glyph`). Positions in % of the stage.
 // Tiles use the palette as fills; icons are black on yellow/sky, white on blue/red/charcoal.
@@ -28,7 +29,7 @@ const GLYPHS: { Icon: LucideIcon; x: number; y: number; size: number; delay: num
 
 export function HeroIntro() {
   return (
-    <PinnedSection id="story-arrival" scrollVh={story.motion.pin.hero} restProgress={0}>
+    <PinnedSection id="story-arrival" chapter="hero" scrollVh={story.motion.pin.hero} restProgress={0}>
       <Stage />
     </PinnedSection>
   );
@@ -37,6 +38,7 @@ export function HeroIntro() {
 function Stage() {
   const p = usePin();
   const { hero } = story;
+  const confetti = useConfetti();
 
   // Scroll-linked morph of the display type: Bricolage's width axis condenses
   // and the weight climbs while the block lifts away.
@@ -78,15 +80,19 @@ function Stage() {
           </span>
         </motion.p>
 
-        <RevealWords
-          as="h1"
-          text={hero.name}
-          className="story-line t-mega"
-          style={{ fontVariationSettings: fvs, letterSpacing }}
-          immediate
-          delay={0.15}
-          duration={1}
-        />
+        {/* Easter egg: click the name for confetti. */}
+        <div className="relative cursor-pointer" onClick={confetti.burst}>
+          <RevealWords
+            as="h1"
+            text={hero.name}
+            className="story-line t-mega"
+            style={{ fontVariationSettings: fvs, letterSpacing }}
+            immediate
+            delay={0.15}
+            duration={1}
+          />
+          {confetti.layer}
+        </div>
 
         <RevealWords
           as="p"

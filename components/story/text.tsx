@@ -24,7 +24,12 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 function segments(text: string, phrases: readonly string[]): Part[] {
   const list = phrases.filter(Boolean);
   if (!list.length) return [{ text, kind: "plain" }];
-  const re = new RegExp(`(${[...list].sort((a, b) => b.length - a.length).map(escape).join("|")})`);
+  const re = new RegExp(
+    `(${[...list]
+      .sort((a, b) => b.length - a.length)
+      .map(escape)
+      .join("|")})`,
+  );
   return text
     .split(re)
     .filter(Boolean)

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono, Urbanist } from "next/font/google";
+import { Bricolage_Grotesque, Caveat, JetBrains_Mono, Urbanist } from "next/font/google";
 import { story } from "@/story.config";
 import "./globals.css";
 
@@ -26,6 +26,14 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+// Handwritten notes and meme captions in the chaos layer.
+const hand = Caveat({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-caveat",
+  display: "swap",
+});
+
 const strip = (s: string) => s.replace(/[[\]{}]/g, "");
 
 export const metadata: Metadata = {
@@ -39,7 +47,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${urbanist.variable} ${mono.variable} antialiased`}>
+    <html lang="en" className={`${bricolage.variable} ${urbanist.variable} ${mono.variable} ${hand.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

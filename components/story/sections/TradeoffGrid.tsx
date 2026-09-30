@@ -8,6 +8,7 @@ import { bz, useScrub, usePrefersReducedMotion } from "../motion";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
+import { ChaosLayer } from "../chaos/ChaosLayer";
 
 // Counter colours (all readable on the light card surface).
 const COUNTER_TONES = ["text-blue", "text-red", "text-charcoal"];
@@ -24,6 +25,7 @@ export function TradeoffGrid() {
 
   return (
     <section id="story-tradeoffs" ref={ref} data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
+      <ChaosLayer chapter="tradeoffs" />
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={6} />
         <RevealWords as="h2" text={tradeoffs.headline} className="story-line t-display mt-6 max-w-[16ch]" duration={0.9} />

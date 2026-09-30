@@ -10,6 +10,8 @@ import { bz } from "../motion";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
+import { ChaosLayer } from "../chaos/ChaosLayer";
+import { useConfetti } from "../chaos/Confetti";
 
 const rise = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -20,12 +22,14 @@ const rise = (delay = 0) => ({
 
 /** Horizon and ask. The page ground crossfades to warm as this section rises (see StoryPage). */
 export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
+  const confetti = useConfetti(90);
   const { finale, hero } = story;
   const [askLabel, ...askRest] = finale.ask.split(":");
   const askBody = askRest.join(":").trim();
 
   return (
     <section id="story-ask" ref={ref} data-chapter className="relative z-[1] px-6 pt-[20svh] pb-12 md:px-12">
+      <ChaosLayer chapter="finale" />
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={8} />
         <RevealWords as="h2" text={finale.headline} className="story-line t-hero mt-6 max-w-[16ch]" duration={1} />
@@ -70,9 +74,12 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 1.1, ease: bz("backOut") }}
-            className="story-line t-mega origin-bottom-left"
+            onViewportEnter={() => setTimeout(confetti.burst, 450)}
+            onClick={confetti.burst}
+            className="story-line t-mega relative origin-bottom-left cursor-pointer"
           >
             <Ph text={finale.thanks} />
+            {confetti.layer}
           </motion.p>
           <p className="eyebrow pb-3 md:text-right">
             <Ph text={hero.name} /> <span aria-hidden>{"//"}</span> <Ph text={hero.team} />

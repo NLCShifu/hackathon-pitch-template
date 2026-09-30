@@ -30,6 +30,7 @@
   --font-display: var(--font-bricolage), system-ui, sans-serif;
   --font-sans: var(--font-urbanist), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
 
   /* GSAP eases used on the Whisper page, as CSS curves */
   --ease-power3-out: cubic-bezier(0.215, 0.61, 0.355, 1);

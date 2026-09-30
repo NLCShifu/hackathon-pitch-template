@@ -20,7 +20,7 @@ import { ChapterMark } from "./ChapterMark";
  */
 export function InsightDrift() {
   return (
-    <PinnedSection id="story-insight" scrollVh={story.motion.pin.insight}>
+    <PinnedSection id="story-insight" chapter="insight" scrollVh={story.motion.pin.insight}>
       <Stage />
     </PinnedSection>
   );

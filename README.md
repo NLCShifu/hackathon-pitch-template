@@ -32,6 +32,7 @@ components/story/
   Ground.tsx / Chrome.tsx       fixed background stack / progress bar, chapter rail, scroll cue
   MediaFrame.tsx                image · video · labelled empty slot
   motion.ts                     GSAP-equivalent eases, scrub spring, reduced-motion hook
+  chaos/                        stickers, doodles, memes, banners, confetti
   sections/
     HeroIntro.tsx               1 · arrival (pinned 110vh, variable-font morph)
     BrokenReality.tsx           2 · split narrative, clip-path wipe + parallax
@@ -68,6 +69,17 @@ Palette: blue `#264ed0` · sky `#5dadeb` · yellow `#ffd301` · red `#c23b21` ·
 - **Grounds:** black (arrival) → white (chapters 2–7) → blue (finale). Text flips between white and black to match.
 - **Yellow and sky are never text colours.** They are used as fills: the highlighter, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
 - Red, blue and charcoal carry text colour on white (the trade-off counters).
+
+## Chaos layer
+
+The funny stuff sits on top of the design and never changes it. It is all in `story.config.ts › chaos`:
+
+- `items`: tilted **stickers**, handwritten **notes**, self-drawing **doodles** (arrow, circle, underline, star, zigzag, a "forbidden" sign with any Lucide icon inside) and **meme** polaroids (drop an image in `/public`, set `image`). Place each one with `chapter`, `x`/`y` (% of that chapter) and `rotate`. Delete an entry to remove it.
+- `banners`: crossed yellow and blue scrolling strips between chapters. They speed up when you scroll fast.
+- `confetti`: fires on "THANK YOU." and when you click the startup name.
+- `enabled: false` turns the whole layer off.
+
+Stickers jiggle when you scroll quickly and wiggle on hover. Chaos items hide on phones unless `mobile: true`. With reduced motion everything stays still and there is no confetti.
 
 ## Tuning
 

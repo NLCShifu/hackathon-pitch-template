@@ -16,6 +16,8 @@ import { PinnedCanvas } from "./sections/PinnedCanvas";
 import { ProofStats } from "./sections/ProofStats";
 import { TradeoffGrid } from "./sections/TradeoffGrid";
 import { Highlights } from "./text";
+import { Marquee } from "./chaos/Marquee";
+import type { ChapterKey } from "./chaos/types";
 
 const CHAPTERS: Chapter[] = [
   { id: "story-arrival", label: "Arrival" },
@@ -61,36 +63,54 @@ export function StoryPage() {
       <Ground paper={paper} warm={warm} />
       <Chrome chapters={CHAPTERS} ink={ink} signal={signal} scrollHint={story.hero.scrollHint} />
       {/* overflow-x: clip (not hidden) so position: sticky keeps working */}
-      <motion.main
-        className="relative overflow-x-clip"
-        style={{ color: ink }}
-      >
+      <motion.main className="relative overflow-x-clip" style={{ color: ink }}>
         {/* Each chapter gets its own yellow phrases from story.config.ts › highlights */}
         <Highlights phrases={hl.hero}>
           <HeroIntro />
         </Highlights>
+        <Banners after="hero" />
         <Highlights phrases={hl.problem}>
           <BrokenReality ref={problemRef} />
         </Highlights>
+        <Banners after="problem" />
         <Highlights phrases={hl.insight}>
           <InsightDrift />
         </Highlights>
+        <Banners after="insight" />
         <Highlights phrases={hl.product}>
           <PinnedCanvas />
         </Highlights>
+        <Banners after="product" />
         <Highlights phrases={hl.demo}>
           <DemoFrame />
         </Highlights>
+        <Banners after="demo" />
         <Highlights phrases={hl.tradeoffs}>
           <TradeoffGrid />
         </Highlights>
+        <Banners after="tradeoffs" />
         <Highlights phrases={hl.proof}>
           <ProofStats />
         </Highlights>
+        <Banners after="proof" />
         <Highlights phrases={hl.finale}>
           <Finale ref={finaleRef} />
         </Highlights>
       </motion.main>
     </MotionConfig>
+  );
+}
+
+/** Crossed scrolling tape from `story.chaos.banners`, dropped in between chapters. */
+function Banners({ after }: { after: ChapterKey }) {
+  if (!story.chaos.enabled) return null;
+  return (
+    <>
+      {story.chaos.banners
+        .filter((b) => b.after === after)
+        .map((b, i) => (
+          <Marquee key={i} text={b.text} />
+        ))}
+    </>
   );
 }
