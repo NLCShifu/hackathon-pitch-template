@@ -11,7 +11,7 @@
  *    which waits for a click and plays with sound).
  * ─────────────────────────────────────────────────────────────────────────
  */
-import { Gauge, Layers, ShieldCheck, Sparkles } from "lucide-react";
+import { Gauge, Globe, Quote, TriangleAlert } from "lucide-react";
 
 export const story = {
   /*
@@ -23,17 +23,17 @@ export const story = {
   highlights: {
     hero: ["HYLITE"],
     demo: [],
-    problem: ["[USER]"],
-    insight: ["[THE OBVIOUS SOLUTION]", "[YOUR NON-OBVIOUS INSIGHT]"],
-    product: ["[STARTUP NAME]"],
+    problem: ["EMPLOYEES"],
+    insight: ["ANOTHER HR CHATBOT", "TRUST"],
+    product: ["HYLITE"],
     tradeoffs: ["ON PURPOSE"],
-    proof: ["[X HOURS]"],
-    finale: ["[A BETTER FUTURE]"],
+    proof: ["A WORKING PROTOTYPE"],
+    finale: ["ANSWERS YOU CAN CITE"],
   } satisfies Record<string, string[]>,
 
   meta: {
-    title: "[STARTUP NAME]",
-    description: "[The clear human outcome you create.]",
+    title: "HYLITE",
+    description: "Your personal HR paralegal. Exact answers, highlighted.",
   },
 
   /* 1 ─ Arrival */
@@ -41,14 +41,14 @@ export const story = {
     eyebrow: "NOT A PITCH. A WORKING BET.",
     team: "A ELEKTRISCH VUUR project",
     name: "HYLITE",
-    tagline: "[The clear human outcome you create.]",
+    tagline: "HR answers straight from the source.",
     scrollHint: "Scroll",
   },
 
   /* 2 ─ Proof in motion (right after the title) */
   demo: {
     action: "WATCH THE DEMO",
-    frameLabel: "[LARGE DEMO SCREENSHOT / VIDEO STILL]",
+    frameLabel: "HYLITE IN ACTION",
     //image: "", // poster still shown before playback, e.g. "/demo.png"
     // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
     video: "",
@@ -57,37 +57,37 @@ export const story = {
 
   /* 3 ─ The broken reality */
   problem: {
-    headline: "[USER] SHOULD NOT HAVE TO [PAINFUL THING].",
+    headline: "EMPLOYEES SHOULD NOT HAVE TO DIG FOR THEIR RIGHTS.",
     context:
-      "[Describe the exact moment: what happens, what they do today, and what it costs.]",
-    photoLabel: "[REAL-WORLD PROBLEM PHOTO]",
+      "Contracts, handbooks, emails and labour law. They disagree, and the right answer gets buried.",
+    photoLabel: "CONTRACT · HR HANDBOOK · EMAILS · LABOUR LAW",
     image: "", // e.g. "/problem.jpg"
   },
 
   /* 4 ─ Bottleneck & non-obvious insight */
   insight: {
-    headline: "WE DIDN’T BUILD [THE OBVIOUS SOLUTION].",
-    because: "Because [why it still fails the user].",
+    headline: "WE DIDN’T BUILD ANOTHER HR CHATBOT.",
+    because: "Because a paraphrase is not proof.",
     steps: [
-      "[CURRENT WORKAROUND]",
-      "[THE ACTUAL BOTTLENECK]",
-      "[YOUR INSIGHT]",
+      "SEARCH BY HAND",
+      "CONFLICTING SOURCES",
+      "SHOW THE SOURCE",
     ],
-    banner: "THE REAL BOTTLENECK IS [YOUR NON-OBVIOUS INSIGHT].",
+    banner: "THE REAL BOTTLENECK IS TRUST.",
   },
 
   /* 5 ─ The product bet (pinned canvas) */
   product: {
-    headline: "SO WE BUILT [STARTUP NAME].",
-    line: "We help [specific user] achieve [concrete outcome] by [how it works—in plain English].",
-    heroLabel: "[YOUR PRODUCT / PROTOTYPE HERO IMAGE]",
+    headline: "SO WE BUILT HYLITE.",
+    line: "Ask a question. Get the exact paragraph, highlighted.",
+    heroLabel: "YELLOW = ANSWER · RED = CONFLICT",
     image: "", // e.g. "/hero.png"
     // Up to 4 callouts float over the canvas as you scroll. Swap icons from lucide.dev/icons.
     pills: [
-      { icon: Sparkles, text: "[FEATURE CALLOUT 1]" },
-      { icon: Gauge, text: "[FEATURE CALLOUT 2]" },
-      { icon: ShieldCheck, text: "[FEATURE CALLOUT 3]" },
-      { icon: Layers, text: "[FEATURE CALLOUT 4]" },
+      { icon: Quote, text: "NO GENERATED TEXT" },
+      { icon: Gauge, text: "SMART RANKING" },
+      { icon: TriangleAlert, text: "CONFLICTS IN RED" },
+      { icon: Globe, text: "COUNTRY-AWARE" },
     ],
   },
 
@@ -98,43 +98,43 @@ export const story = {
       {
         n: "01",
         title: "WE BUILT",
-        body: "[smallest thing proving key assumption]",
+        body: "Search with highlighted source paragraphs.",
       },
       {
         n: "02",
         title: "WE DID NOT BUILD",
-        body: "[tempting non-essential feature]",
+        body: "A production database. Search is mocked for now.",
       },
       {
         n: "03",
         title: "BECAUSE",
-        body: "[why this was the correct technical choice]",
+        body: "Trust was the risk to test, not scale.",
       },
     ],
-    tech: "[Architecture / model / sensor / workflow in one defensible line]",
+    tech: "Node.js + React, one shared TypeScript API.",
   },
 
   /* 7 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
   proof: {
-    headline: "WHAT WE PROVED IN [X HOURS].",
+    headline: "WHAT WE DELIVERED: A WORKING PROTOTYPE.",
     stats: [
-      { value: "[X]", label: "tests/users" },
-      { value: "[Y]", label: "key output" },
-      { value: "[Z]", label: "seconds / % / result" },
+      { value: "5", label: "topic folders" },
+      { value: "4", label: "file formats" },
+      { value: "0", label: "generated sentences" },
     ],
     learned:
-      "What we learned: [One honest result. What worked + next constraint].",
+      "Every answer is a real quote from a real source.",
   },
 
   /* 8 ─ Horizon & the ask */
   finale: {
-    headline: "WE ARE TURNING [OLD PAINFUL REALITY] INTO [A BETTER FUTURE].",
-    ask: "THE ASK: [pilot / intro / access / mentorship / prize]",
+    headline: "WE ARE TURNING HR GUESSWORK INTO ANSWERS YOU CAN CITE.",
+    ask: "THE ASK: A PILOT TEAM.",
     milestone:
-      "Next milestone: [specific experiment or build by concrete time]",
+      "Next milestone: connect the real database.",
     qrUrl: "", // e.g. "https://your-demo.app" → renders a live QR code
     qrImage: "", // or a pre-made QR image, e.g. "/qr.png"
-    qrLabel: "[QR CODE]",
+    qrLabel: "TRY HYLITE",
     thanks: "THANK YOU.",
   },
 
