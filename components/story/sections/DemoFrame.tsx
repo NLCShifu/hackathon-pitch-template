@@ -19,14 +19,16 @@ import { ChapterMark } from "./ChapterMark";
  *   .04–.44  frame scales .56 → 1, media 1.18 → 1
  *   .44      scrim fades in     .48  action label reveals     .58  status bar docks
  *
- * Presentation stops at .68, right after the bar docks: past that the pin only holds.
+ * Presentation stops twice: at 0 (the previous chapter has slid away, the small
+ * card waits) and at .68 (full-bleed, label and bar docked). Splitting the entry
+ * keeps each arrow press a short, even glide.
  *
  * Clicking the frame plays `demo.video` with sound; the overlays step aside
  * while it runs. Click again (or scroll away) to pause.
  */
 export function DemoFrame() {
   return (
-    <PinnedSection id="story-demo" scrollVh={story.motion.pin.demo} restProgress={1} beats={[0.68]} padded={false}>
+    <PinnedSection id="story-demo" scrollVh={story.motion.pin.demo} restProgress={1} beats={[0, 0.68]} padded={false}>
       <Stage />
     </PinnedSection>
   );
@@ -75,7 +77,7 @@ function Stage() {
   return (
     <div className="absolute inset-0">
       <motion.div style={{ opacity: markOpacity }} className="absolute inset-x-0 top-[clamp(20px,5vh,56px)] flex justify-center">
-        <ChapterMark n={2} />
+        <ChapterMark n={5} />
       </motion.div>
 
       <motion.div
@@ -137,21 +139,23 @@ function Stage() {
           </div>
         </div>
 
-        <motion.div
-          style={{ opacity: barOpacity, y: barY }}
-          className="pointer-events-none absolute inset-x-4 bottom-4 z-[2] md:inset-x-8 md:bottom-7"
-        >
-          <div className={`${overlay} border-cream/15 bg-night/70 text-cream-dim mx-auto flex max-w-[980px] items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-md md:px-6`}>
-            <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" aria-hidden>
-              <span className="animate-live bg-yellow absolute inset-0 rounded-full" />
-              <span className="bg-yellow relative h-2.5 w-2.5 rounded-full" />
-            </span>
-            <Radio className="text-yellow hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
-            <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]">
-              <Ph text={demo.plan} />
-            </p>
-          </div>
-        </motion.div>
+        {demo.plan && (
+          <motion.div
+            style={{ opacity: barOpacity, y: barY }}
+            className="pointer-events-none absolute inset-x-4 bottom-4 z-[2] md:inset-x-8 md:bottom-7"
+          >
+            <div className={`${overlay} border-cream/15 bg-night/70 text-cream-dim mx-auto flex max-w-[980px] items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-md md:px-6`}>
+              <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" aria-hidden>
+                <span className="animate-live bg-yellow absolute inset-0 rounded-full" />
+                <span className="bg-yellow relative h-2.5 w-2.5 rounded-full" />
+              </span>
+              <Radio className="text-yellow hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.8} aria-hidden />
+              <p className="font-mono text-[11.5px] leading-snug tracking-[0.04em] md:text-[13px]">
+                <Ph text={demo.plan} />
+              </p>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );

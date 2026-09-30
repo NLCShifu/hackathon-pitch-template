@@ -13,10 +13,11 @@ import { ChapterMark } from "./ChapterMark";
  * The product bet, a 300vh "living canvas" (Whisper's journey chapter length).
  *
  *   .02–.14  headline rises centred and large
- *   .10–.34  headline docks to the top; canvas tilts up out of perspective
+ *   .10–.34  headline docks to the top
+ *   .15–.36  canvas slides up from below the fold, fully opaque, and stays put (no fade, no zoom)
  *   .22      sub-copy reveals under the headline
  *   .38–.74  feature pills float onto the canvas, one every .12
- *   .86–.96  pills and copy clear the stage for the next chapter
+ *   pills and copy stay on stage until the chapter scrolls away (no fade-out)
  *
  * Presentation beats: headline · canvas docks · one per pill.
  */
@@ -46,21 +47,20 @@ function Stage() {
   const dock = useTransform(p, [0.1, 0.34], [0, 1], { ease: ease.power2InOut });
   const headY = useTransform(dock, [0, 1], ["26svh", "0svh"]);
   const headScale = useTransform(dock, [0, 1], [1.18, 1]);
-  const copyOut = useTransform(p, [0.86, 0.96], [1, 0], { ease: ease.power1In });
 
-  const canvasIn = useTransform(p, [0.12, 0.36], [0, 1], { ease: ease.power3Out });
-  const canvasY = useTransform(canvasIn, [0, 1], ["60svh", "0svh"]);
+  // Starts below the fold, so the headline step (.14) shows no half-faded canvas.
+  const canvasIn = useTransform(p, [0.15, 0.36], [0, 1], { ease: ease.power3Out });
+  const canvasY = useTransform(canvasIn, [0, 1], ["100svh", "0svh"]);
   const rotateX = useTransform(canvasIn, [0, 1], [24, 0]);
-  const canvasScale = useTransform(p, [0.12, 0.36, 1], [0.78, 1, 1.04]);
-  const canvasOpacity = useTransform(p, [0.12, 0.2], [0, 1]);
+  const canvasScale = useTransform(canvasIn, [0, 1], [0.78, 1]);
 
   return (
     <div className="relative flex flex-1 flex-col items-center px-6 pt-[clamp(56px,9vh,110px)] md:px-12">
       <motion.header
-        style={{ y: headY, scale: headScale, opacity: copyOut }}
+        style={{ y: headY, scale: headScale }}
         className="relative z-[2] w-full max-w-[980px] origin-top text-center"
       >
-        <ChapterMark n={5} className="justify-center" />
+        <ChapterMark n={4} className="justify-center" />
         <RevealWords as="h2" text={product.headline} className="story-line t-display mt-4" progress={p} at={0.02} duration={0.12} />
         <RevealWords
           as="p"
@@ -74,7 +74,7 @@ function Stage() {
 
       <div className="relative mt-[clamp(20px,4vh,44px)] w-full flex-1 [perspective:1600px]">
         <motion.div
-          style={{ y: canvasY, rotateX, scale: canvasScale, opacity: canvasOpacity }}
+          style={{ y: canvasY, rotateX, scale: canvasScale }}
           className="relative mx-auto aspect-[4/5] w-[min(100%,420px)] sm:aspect-[16/10] sm:w-[min(100%,1000px,calc((100svh_-_340px)*1.6))] origin-[50%_0%]"
         >
           <div className="border-ink/10 bg-surface absolute inset-0 overflow-hidden rounded-[22px] border shadow-[0_60px_120px_-50px_#13131366]">
@@ -110,16 +110,16 @@ function Pill({
 }: (typeof story.product.pills)[number] & { index: number; progress: MotionValue<number> }) {
   const at = 0.38 + index * 0.12;
   const t = useTransform(progress, [at, at + 0.08], [0, 1], { clamp: true });
-  const out = useTransform(progress, [0.84 + index * 0.02, 0.9 + index * 0.02], [1, 0]);
-  const opacity = useTransform([t, out], ([a, b]: number[]) => a * b);
-  const scale = useTransform(t, [0, 1], [0.86, 1], { ease: ease.backOut });
+  // Callouts pop in at full opacity (scale only), so they're never see-through.
+  const opacity = useTransform(t, (v) => (v > 0 ? 1 : 0));
+  const scale = useTransform(t, [0, 1], [0.6, 1], { ease: ease.backOut });
   // Every pill floats at its own rate, so the canvas feels alive under the scroll.
   const y = useTransform(progress, [at, 1], [28, -26 - index * 10]);
 
   return (
     <motion.div
       style={{ ...PILL_SLOTS[index], opacity, scale, y }}
-      className="border-ink/10 bg-surface/90 text-ink absolute z-[3] flex max-w-[min(320px,46vw)] items-center gap-2.5 rounded-full border py-2 pr-4 pl-2 shadow-[0_18px_40px_-20px_#13131366] backdrop-blur-md"
+      className="border-ink/10 bg-surface text-ink absolute z-[3] flex max-w-[min(320px,46vw)] items-center gap-2.5 rounded-full border py-2 pr-4 pl-2 shadow-[0_18px_40px_-20px_#13131366]"
     >
       <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${PILL_TONES[index % PILL_TONES.length]}`}>
         <Icon className="h-4 w-4" strokeWidth={1.8} aria-hidden />

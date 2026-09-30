@@ -20,10 +20,10 @@ import { Highlights } from "./text";
 
 const CHAPTERS: Chapter[] = [
   { id: "story-arrival", label: "Arrival" },
-  { id: "story-demo", label: "Demo" },
   { id: "story-problem", label: "Reality" },
   { id: "story-insight", label: "Insight" },
   { id: "story-product", label: "The bet" },
+  { id: "story-demo", label: "Demo" },
   { id: "story-tradeoffs", label: "Trade-offs" },
   { id: "story-proof", label: "Proof" },
   { id: "story-ask", label: "The ask" },
@@ -44,7 +44,7 @@ export function StoryPage() {
   const present = usePresentation(CHAPTERS);
 
   // Ground crossfades are keyed to where chapters sit, not to fixed pixel values.
-  const { scrollYProgress: toPaper } = useScroll({ target: problemRef, offset: ["start 85%", "start 30%"] });
+  const { scrollYProgress: toPaper } = useScroll({ target: problemRef, offset: ["start 100%", "start 20%"] });
   const { scrollYProgress: toWarm } = useScroll({ target: finaleRef, offset: ["start 55%", "start 5%"] });
   const paper = useScrub(toPaper);
   const warm = useScrub(toWarm);
@@ -72,9 +72,6 @@ export function StoryPage() {
           <Highlights phrases={hl.hero}>
             <HeroIntro />
           </Highlights>
-          <Highlights phrases={hl.demo}>
-            <DemoFrame />
-          </Highlights>
           <Highlights phrases={hl.problem}>
             <BrokenReality ref={problemRef} />
           </Highlights>
@@ -83,6 +80,9 @@ export function StoryPage() {
           </Highlights>
           <Highlights phrases={hl.product}>
             <PinnedCanvas />
+          </Highlights>
+          <Highlights phrases={hl.demo}>
+            <DemoFrame />
           </Highlights>
           <Highlights phrases={hl.tradeoffs}>
             <TradeoffGrid />

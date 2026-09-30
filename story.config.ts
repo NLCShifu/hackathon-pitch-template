@@ -21,11 +21,11 @@ export const story = {
    * When you rewrite a headline, update its phrase here too.
    */
   highlights: {
-    hero: ["HYLITE"],
-    demo: [],
+    hero: ["[STARTUP NAME]"],
     problem: ["[USER]"],
     insight: ["[THE OBVIOUS SOLUTION]", "[YOUR NON-OBVIOUS INSIGHT]"],
     product: ["[STARTUP NAME]"],
+    demo: [],
     tradeoffs: ["ON PURPOSE"],
     proof: ["[X HOURS]"],
     finale: ["[A BETTER FUTURE]"],
@@ -39,23 +39,13 @@ export const story = {
   /* 1 ─ Arrival */
   hero: {
     eyebrow: "NOT A PITCH. A WORKING BET.",
-    team: "A ELEKTRISCH VUUR project",
-    name: "HYLITE",
+    team: "A [TEAM NAME] project",
+    name: "[STARTUP NAME]",
     tagline: "[The clear human outcome you create.]",
     scrollHint: "Scroll",
   },
 
-  /* 2 ─ Proof in motion (right after the title) */
-  demo: {
-    action: "WATCH THE DEMO",
-    frameLabel: "[LARGE DEMO SCREENSHOT / VIDEO STILL]",
-    //image: "", // poster still shown before playback, e.g. "/demo.png"
-    // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
-    video: "",
-    //plan: "Live demo plan: [one sentence]. Backup: [recorded clip / screenshot].",
-  },
-
-  /* 3 ─ The broken reality */
+  /* 2 ─ The broken reality */
   problem: {
     headline: "[USER] SHOULD NOT HAVE TO [PAINFUL THING].",
     context:
@@ -64,7 +54,7 @@ export const story = {
     image: "", // e.g. "/problem.jpg"
   },
 
-  /* 4 ─ Bottleneck & non-obvious insight */
+  /* 3 ─ Bottleneck & non-obvious insight */
   insight: {
     headline: "WE DIDN’T BUILD [THE OBVIOUS SOLUTION].",
     because: "Because [why it still fails the user].",
@@ -76,7 +66,7 @@ export const story = {
     banner: "THE REAL BOTTLENECK IS [YOUR NON-OBVIOUS INSIGHT].",
   },
 
-  /* 5 ─ The product bet (pinned canvas) */
+  /* 4 ─ The product bet (pinned canvas) */
   product: {
     headline: "SO WE BUILT [STARTUP NAME].",
     line: "We help [specific user] achieve [concrete outcome] by [how it works—in plain English].",
@@ -89,6 +79,16 @@ export const story = {
       { icon: ShieldCheck, text: "[FEATURE CALLOUT 3]" },
       { icon: Layers, text: "[FEATURE CALLOUT 4]" },
     ],
+  },
+
+  /* 5 ─ Proof in motion (right after you name the product) */
+  demo: {
+    action: "WATCH THE DEMO",
+    frameLabel: "[LARGE DEMO SCREENSHOT / VIDEO STILL]",
+    image: "", // poster still shown before playback, e.g. "/demo.png"
+    // Plays with sound when the frame is clicked; click again to pause. e.g. "/demo.mp4"
+    video: "",
+    plan: "", // optional caption bar under the demo; empty = hidden
   },
 
   /* 6 ─ Intentional trade-offs */
@@ -150,7 +150,7 @@ export const story = {
     smoothing: "lenis" as "lenis" | "scrub",
     lenis: { lerp: 0.1, wheelMultiplier: 1 },
     // Extra scroll distance each pinned chapter holds the screen, in vh.
-    pin: { hero: 110, insight: 190, canvas: 300, demo: 220 },
+    pin: { hero: 170, insight: 190, canvas: 300, demo: 220 },
   },
 };
 

@@ -82,7 +82,7 @@ function Card({ card, index, pass }: { card: (typeof story.tradeoffs.cards)[numb
           >
             {card.n}
           </span>
-          <span className="text-ink-soft text-right text-[11px] tracking-[0.19em] uppercase">
+          <span className="bg-yellow rounded-md px-2.5 py-1 text-right text-[clamp(0.95rem,1.3vw,1.15rem)] font-semibold tracking-[0.12em] text-black uppercase">
             <Ph text={card.title} />
           </span>
         </div>

@@ -32,7 +32,7 @@ export function BrokenReality({ ref }: { ref?: Ref<HTMLElement> }) {
     <section id="story-problem" ref={setRef} data-chapter className="relative z-[1] px-6 py-[18svh] md:px-12">
       <div className="mx-auto grid max-w-[1240px] items-center gap-12 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-7 md:pr-6">
-          <ChapterMark n={3} />
+          <ChapterMark n={2} />
           <RevealWords as="h2" text={problem.headline} className="story-line t-display mt-6" duration={0.9} />
           <motion.p
             className="t-caption text-ink-soft mt-10 md:ml-[12%]"
