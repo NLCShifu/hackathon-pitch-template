@@ -5,6 +5,7 @@ import { Cpu } from "lucide-react";
 import { useRef } from "react";
 import { story } from "@/story.config";
 import { bz, useScrub, usePrefersReducedMotion } from "../motion";
+import { Beat } from "../Presentation";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
@@ -15,7 +16,10 @@ const COUNTER_TONES = ["text-blue", "text-red", "text-charcoal"];
 // Asymmetric 12-col layout: descending widths, each card stepping further down.
 const LAYOUT = ["md:col-span-5", "md:col-span-4 md:mt-28", "md:col-span-3 md:mt-56"];
 
-/** Three progressive editorial cards that drift at different rates as you pass them. */
+/**
+ * Three progressive editorial cards that drift at different rates as you pass them.
+ * Presentation beats: headline · each card · tech line.
+ */
 export function TradeoffGrid() {
   const { tradeoffs } = story;
   const ref = useRef<HTMLElement>(null);
@@ -26,28 +30,34 @@ export function TradeoffGrid() {
     <section id="story-tradeoffs" ref={ref} data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={6} />
-        <RevealWords as="h2" text={tradeoffs.headline} className="story-line t-display mt-6 max-w-[16ch]" duration={0.9} />
+        <Beat n={0}>
+          <RevealWords as="h2" text={tradeoffs.headline} className="story-line t-display mt-6 max-w-[16ch]" duration={0.9} />
+        </Beat>
 
         <div className="mt-[clamp(48px,9vh,110px)] grid items-start gap-5 md:grid-cols-12 md:gap-6">
           {tradeoffs.cards.map((card, i) => (
-            <Card key={card.n} card={card} index={i} pass={pass} />
+            <Beat key={card.n} n={i + 1}>
+              <Card card={card} index={i} pass={pass} />
+            </Beat>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ duration: 0.8, ease: bz("power3Out") }}
-          className="border-ink/15 mt-[clamp(48px,9vh,110px)] flex items-start gap-4 border-y py-6 md:items-center"
-        >
-          <span className="bg-blue grid h-10 w-10 text-white shrink-0 place-items-center rounded-full">
-            <Cpu className="h-4.5 w-4.5" strokeWidth={1.7} aria-hidden />
-          </span>
-          <p className="font-mono text-[14px] leading-relaxed tracking-[0.02em] md:text-[15px]">
-            <Ph text={tradeoffs.tech} />
-          </p>
-        </motion.div>
+        <Beat n={tradeoffs.cards.length + 1}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.8, ease: bz("power3Out") }}
+            className="border-ink/15 mt-[clamp(48px,9vh,110px)] flex items-start gap-4 border-y py-6 md:items-center"
+          >
+            <span className="bg-blue grid h-10 w-10 text-white shrink-0 place-items-center rounded-full">
+              <Cpu className="h-4.5 w-4.5" strokeWidth={1.7} aria-hidden />
+            </span>
+            <p className="font-mono text-[14px] leading-relaxed tracking-[0.02em] md:text-[15px]">
+              <Ph text={tradeoffs.tech} />
+            </p>
+          </motion.div>
+        </Beat>
       </div>
     </section>
   );

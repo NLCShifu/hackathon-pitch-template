@@ -2,8 +2,10 @@
 
 import { motion, useScroll, useSpring, useTransform, type MotionStyle, type MotionValue } from "framer-motion";
 import { useLenis } from "lenis/react";
+import { Presentation as PresentIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ease } from "./motion";
+import type { Presentation } from "./Presentation";
 
 export type Chapter = { id: string; label: string };
 
@@ -11,17 +13,20 @@ export type Chapter = { id: string; label: string };
  * Fixed UI over the story: 2px progress bar, chapter rail, scroll cue.
  * `ink` is the page's live text colour so the rail reads on every ground;
  * `signal` is the palette colour used for the bar and the active dot.
+ * In presentation mode the scroll cue steps aside and a slide counter shows.
  */
 export function Chrome({
   chapters,
   ink,
   signal,
   scrollHint,
+  present,
 }: {
   chapters: Chapter[];
   ink: MotionValue<string>;
   signal: MotionValue<string>;
   scrollHint: string;
+  present: Presentation;
 }) {
   const { scrollYProgress, scrollY } = useScroll();
   // Whisper: `scaleX` scrubbed over the whole document with scrub 0.4.
@@ -34,6 +39,7 @@ export function Chrome({
   const lenis = useLenis();
 
   const go = (id: string) => {
+    if (present.on) return present.jump(id);
     const el = document.getElementById(id);
     if (!el) return;
     if (lenis) lenis.scrollTo(el, { duration: 0.9, easing: ease.power2InOut });
@@ -73,17 +79,44 @@ export function Chrome({
         })}
       </nav>
 
-      <motion.button
+      {!present.on && (
+        <motion.button
+          type="button"
+          onClick={() => go(chapters[1]?.id ?? "")}
+          style={{ opacity: cueOpacity, pointerEvents: cueEvents }}
+          className="bg-yellow text-black fixed bottom-[26px] left-1/2 z-40 flex -translate-x-1/2 cursor-pointer items-center gap-3 rounded-full py-[11px] pr-5 pl-4 shadow-[0_18px_40px_-22px_#0000008c]"
+        >
+          <span className="relative block h-[34px] w-[22px] rounded-full border-[1.5px] opacity-85" aria-hidden>
+            <span className="animate-cue absolute top-[7px] left-1/2 block h-[7px] w-[3px] rounded-full bg-current" />
+          </span>
+          <span className="font-display text-[14px] font-semibold whitespace-nowrap">{scrollHint}</span>
+        </motion.button>
+      )}
+
+      <button
         type="button"
-        onClick={() => go(chapters[1]?.id ?? "")}
-        style={{ opacity: cueOpacity, pointerEvents: cueEvents }}
-        className="bg-yellow text-black fixed bottom-[26px] left-1/2 z-40 flex -translate-x-1/2 cursor-pointer items-center gap-3 rounded-full py-[11px] pr-5 pl-4 shadow-[0_18px_40px_-22px_#0000008c]"
+        onClick={present.toggle}
+        aria-pressed={present.on}
+        title={present.on ? "Exit presentation mode (Esc)" : "Presentation mode (P): use the arrow keys to change slide"}
+        className={`fixed right-[18px] bottom-[18px] z-40 hidden cursor-pointer items-center gap-2 rounded-full border border-current/20 px-3 py-2 font-mono text-[10px] tracking-[0.16em] uppercase transition-opacity duration-300 hover:opacity-100 md:flex ${
+          present.on ? "opacity-45" : "opacity-30"
+        }`}
       >
-        <span className="relative block h-[34px] w-[22px] rounded-full border-[1.5px] opacity-85" aria-hidden>
-          <span className="animate-cue absolute top-[7px] left-1/2 block h-[7px] w-[3px] rounded-full bg-current" />
-        </span>
-        <span className="font-display text-[14px] font-semibold whitespace-nowrap">{scrollHint}</span>
-      </motion.button>
+        {present.on ? (
+          <>
+            <span>
+              {String(present.slide + 1).padStart(2, "0")} / {String(present.slides).padStart(2, "0")}
+            </span>
+            <span className="opacity-60">← →</span>
+            <X className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
+          </>
+        ) : (
+          <>
+            <PresentIcon className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
+            <span>Present</span>
+          </>
+        )}
+      </button>
     </motion.div>
   );
 }

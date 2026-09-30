@@ -5,54 +5,62 @@ import { Lightbulb } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { story } from "@/story.config";
 import { bz, ease, usePrefersReducedMotion } from "../motion";
+import { Beat } from "../Presentation";
 import { RevealWords } from "../RevealWords";
 import { Ph } from "../text";
 import { ChapterMark } from "./ChapterMark";
 
+/** Presentation beats: headline · each stat · what we learned. */
 export function ProofStats() {
   const { proof } = story;
   return (
     <section id="story-proof" data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
       <div className="mx-auto max-w-[1240px]">
         <ChapterMark n={7} />
-        <RevealWords as="h2" text={proof.headline} className="story-line t-display mt-6 max-w-[18ch]" duration={0.9} />
+        <Beat n={0}>
+          <RevealWords as="h2" text={proof.headline} className="story-line t-display mt-6 max-w-[18ch]" duration={0.9} />
+        </Beat>
 
         <dl className="mt-[clamp(48px,9vh,110px)] grid gap-10 md:grid-cols-3 md:gap-8">
           {proof.stats.map((s, i) => (
-            <div key={i} className="relative pt-7">
-              <motion.span
-                className={`absolute inset-x-0 top-0 h-[3px] origin-left ${RULE_TONES[i % RULE_TONES.length]}`}
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 1 }}
-                transition={{ duration: 1.1, delay: i * 0.12, ease: bz("power2InOut") }}
-                aria-hidden
-              />
-              <dd className="story-line text-[clamp(3.6rem,9vw,8rem)] leading-[0.95] tracking-[-0.035em]">
-                <CountUp value={s.value} delay={0.15 + i * 0.12} />
-              </dd>
-              <dt className="eyebrow mt-4">
-                <Ph text={s.label} />
-              </dt>
-            </div>
+            <Beat key={i} n={i + 1}>
+              <div className="relative pt-7">
+                <motion.span
+                  className={`absolute inset-x-0 top-0 h-[3px] origin-left ${RULE_TONES[i % RULE_TONES.length]}`}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, amount: 1 }}
+                  transition={{ duration: 1.1, delay: i * 0.12, ease: bz("power2InOut") }}
+                  aria-hidden
+                />
+                <dd className="story-line text-[clamp(3.6rem,9vw,8rem)] leading-[0.95] tracking-[-0.035em]">
+                  <CountUp value={s.value} delay={0.15 + i * 0.12} />
+                </dd>
+                <dt className="eyebrow mt-4">
+                  <Ph text={s.label} />
+                </dt>
+              </div>
+            </Beat>
           ))}
         </dl>
 
-        <motion.aside
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.7 }}
-          transition={{ duration: 0.9, ease: bz("power3Out") }}
-          className="border-hairline bg-surface text-ink relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
-        >
-          <span className="bg-blue absolute inset-y-0 left-0 w-1" aria-hidden />
-          <span className="bg-yellow grid h-11 w-11 text-black shrink-0 place-items-center rounded-full">
-            <Lightbulb className="h-5 w-5" strokeWidth={1.7} aria-hidden />
-          </span>
-          <p className="t-caption !max-w-[60ch] text-[clamp(1.1rem,1.7vw,1.35rem)]">
-            <Ph text={proof.learned} />
-          </p>
-        </motion.aside>
+        <Beat n={proof.stats.length + 1}>
+          <motion.aside
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ duration: 0.9, ease: bz("power3Out") }}
+            className="border-hairline bg-surface text-ink relative mt-[clamp(48px,9vh,110px)] flex gap-5 overflow-hidden rounded-[22px] border p-7 md:ml-[25%] md:p-9"
+          >
+            <span className="bg-blue absolute inset-y-0 left-0 w-1" aria-hidden />
+            <span className="bg-yellow grid h-11 w-11 text-black shrink-0 place-items-center rounded-full">
+              <Lightbulb className="h-5 w-5" strokeWidth={1.7} aria-hidden />
+            </span>
+            <p className="t-caption !max-w-[60ch] text-[clamp(1.1rem,1.7vw,1.35rem)]">
+              <Ph text={proof.learned} />
+            </p>
+          </motion.aside>
+        </Beat>
       </div>
     </section>
   );

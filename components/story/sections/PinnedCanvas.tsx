@@ -16,11 +16,13 @@ import { ChapterMark } from "./ChapterMark";
  *   .10–.34  headline docks to the top; canvas tilts up out of perspective
  *   .22      sub-copy reveals under the headline
  *   .38–.74  feature pills float onto the canvas, one every .12
- *   .86–.96  pills and copy clear the stage for the demo chapter
+ *   .86–.96  pills and copy clear the stage for the next chapter
+ *
+ * Presentation beats: headline · canvas docks · one per pill.
  */
 export function PinnedCanvas() {
   return (
-    <PinnedSection id="story-product" scrollVh={story.motion.pin.canvas} restProgress={0.8} padded={false}>
+    <PinnedSection id="story-product" scrollVh={story.motion.pin.canvas} restProgress={0.8} beats={[0.14, 0.37, 0.47, 0.59, 0.71, 0.83]} padded={false}>
       <Stage />
     </PinnedSection>
   );
@@ -58,7 +60,7 @@ function Stage() {
         style={{ y: headY, scale: headScale, opacity: copyOut }}
         className="relative z-[2] w-full max-w-[980px] origin-top text-center"
       >
-        <ChapterMark n={4} className="justify-center" />
+        <ChapterMark n={5} className="justify-center" />
         <RevealWords as="h2" text={product.headline} className="story-line t-display mt-4" progress={p} at={0.02} duration={0.12} />
         <RevealWords
           as="p"

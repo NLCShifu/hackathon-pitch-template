@@ -6,6 +6,7 @@ import { story } from "@/story.config";
 import { Chrome, type Chapter } from "./Chrome";
 import { Ground } from "./Ground";
 import { useScrub } from "./motion";
+import { DeckProvider, usePresentation } from "./Presentation";
 import { SmoothScroll } from "./SmoothScroll";
 import { BrokenReality } from "./sections/BrokenReality";
 import { DemoFrame } from "./sections/DemoFrame";
@@ -19,10 +20,10 @@ import { Highlights } from "./text";
 
 const CHAPTERS: Chapter[] = [
   { id: "story-arrival", label: "Arrival" },
+  { id: "story-demo", label: "Demo" },
   { id: "story-problem", label: "Reality" },
   { id: "story-insight", label: "Insight" },
   { id: "story-product", label: "The bet" },
-  { id: "story-demo", label: "Demo" },
   { id: "story-tradeoffs", label: "Trade-offs" },
   { id: "story-proof", label: "Proof" },
   { id: "story-ask", label: "The ask" },
@@ -40,6 +41,7 @@ const hl = story.highlights;
 export function StoryPage() {
   const problemRef = useRef<HTMLElement>(null);
   const finaleRef = useRef<HTMLElement>(null);
+  const present = usePresentation(CHAPTERS);
 
   // Ground crossfades are keyed to where chapters sit, not to fixed pixel values.
   const { scrollYProgress: toPaper } = useScroll({ target: problemRef, offset: ["start 85%", "start 30%"] });
@@ -59,38 +61,40 @@ export function StoryPage() {
     <MotionConfig reducedMotion="user">
       <SmoothScroll />
       <Ground paper={paper} warm={warm} />
-      <Chrome chapters={CHAPTERS} ink={ink} signal={signal} scrollHint={story.hero.scrollHint} />
+      <Chrome chapters={CHAPTERS} ink={ink} signal={signal} scrollHint={story.hero.scrollHint} present={present} />
       {/* overflow-x: clip (not hidden) so position: sticky keeps working */}
-      <motion.main
-        className="relative overflow-x-clip"
-        style={{ color: ink }}
-      >
-        {/* Each chapter gets its own yellow phrases from story.config.ts › highlights */}
-        <Highlights phrases={hl.hero}>
-          <HeroIntro />
-        </Highlights>
-        <Highlights phrases={hl.problem}>
-          <BrokenReality ref={problemRef} />
-        </Highlights>
-        <Highlights phrases={hl.insight}>
-          <InsightDrift />
-        </Highlights>
-        <Highlights phrases={hl.product}>
-          <PinnedCanvas />
-        </Highlights>
-        <Highlights phrases={hl.demo}>
-          <DemoFrame />
-        </Highlights>
-        <Highlights phrases={hl.tradeoffs}>
-          <TradeoffGrid />
-        </Highlights>
-        <Highlights phrases={hl.proof}>
-          <ProofStats />
-        </Highlights>
-        <Highlights phrases={hl.finale}>
-          <Finale ref={finaleRef} />
-        </Highlights>
-      </motion.main>
+      <DeckProvider value={present}>
+        <motion.main
+          className="relative overflow-x-clip"
+          style={{ color: ink }}
+        >
+          {/* Each chapter gets its own yellow phrases from story.config.ts › highlights */}
+          <Highlights phrases={hl.hero}>
+            <HeroIntro />
+          </Highlights>
+          <Highlights phrases={hl.demo}>
+            <DemoFrame />
+          </Highlights>
+          <Highlights phrases={hl.problem}>
+            <BrokenReality ref={problemRef} />
+          </Highlights>
+          <Highlights phrases={hl.insight}>
+            <InsightDrift />
+          </Highlights>
+          <Highlights phrases={hl.product}>
+            <PinnedCanvas />
+          </Highlights>
+          <Highlights phrases={hl.tradeoffs}>
+            <TradeoffGrid />
+          </Highlights>
+          <Highlights phrases={hl.proof}>
+            <ProofStats />
+          </Highlights>
+          <Highlights phrases={hl.finale}>
+            <Finale ref={finaleRef} />
+          </Highlights>
+        </motion.main>
+      </DeckProvider>
     </MotionConfig>
   );
 }

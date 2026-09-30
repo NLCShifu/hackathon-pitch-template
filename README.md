@@ -14,9 +14,19 @@ npm run build && npm start
 
 1. Open **`story.config.ts`**. It is the only file you need to edit.
 2. Replace every `[BRACKETED PLACEHOLDER]` with your copy (brackets and all).
-3. Put images in `/public` and set `image: "/your-file.jpg"`. `.mp4` and `.webm` files play as muted loops.
+3. Put images in `/public` and set `image: "/your-file.jpg"`. `.mp4` and `.webm` files play as muted loops. The demo is the exception: set `demo.video: "/demo.mp4"` and the clip plays with sound when the frame is clicked (click again to pause). `demo.image` becomes its poster.
 4. Set `finale.qrUrl` to your demo link and the QR code is generated for you.
 5. What turns yellow is set in one place: the `highlights` block at the top of `story.config.ts`. List the exact words per chapter (case-sensitive). Use `[]` for no yellow. When you rewrite a headline, update its phrase there too.
+
+## Presentation mode
+
+Press **P** (or the **Present** button, bottom right) to turn the page into slides. Scrolling is switched off; **→ / ↓ / PageDown** go to the next slide and **← / ↑ / PageUp** go back (so a presentation clicker works), with **Home / End** for first and last. On touch screens, swipe. **Esc** leaves. Open `/?present` to start in it.
+
+Chapters build up one press at a time instead of jumping straight to the end:
+
+- **Pinned chapters** stop at each of their `beats` (progress points along the pin, set on `<PinnedSection>`), so every press plays the next stretch of the scroll animation: Insight goes headline → card 1 → card 2 → lit insight → banner; The bet goes headline → canvas → one press per feature callout.
+- **Free-flowing chapters** (Trade-offs, Proof, The ask) reveal one `<Beat n={…}>` per press, and each element plays its own entrance as it appears. Wrap any element in `<Beat>` to add a step.
+- Going back hides the steps again, so they replay next time.
 
 ## File map
 
@@ -29,18 +39,20 @@ components/story/
   PinnedSection.tsx             sticky pin + normalised 0→1 progress (usePin)
   RevealWords.tsx               masked word slide-up (scroll-scrubbed or in-view)
   SmoothScroll.tsx              Lenis root config
-  Ground.tsx / Chrome.tsx       fixed background stack / progress bar, chapter rail, scroll cue
+  Ground.tsx / Chrome.tsx       fixed background stack / progress bar, chapter rail, scroll cue, present toggle
+  Presentation.tsx              presentation mode: slide stops, build steps (<Beat>), arrow keys, scroll lock
   MediaFrame.tsx                image · video · labelled empty slot
   motion.ts                     GSAP-equivalent eases, scrub spring, reduced-motion hook
+  Confetti.tsx                  one-shot confetti burst (thank-you)
   sections/
     HeroIntro.tsx               1 · arrival (pinned 110vh, variable-font morph)
-    BrokenReality.tsx           2 · split narrative, clip-path wipe + parallax
-    InsightDrift.tsx            3 · pinned card drift → bottleneck banner
-    PinnedCanvas.tsx            4 · 300vh living canvas + floating feature pills
-    DemoFrame.tsx               5 · frame scales to full-bleed, docked status bar
+    DemoFrame.tsx               2 · frame scales to full-bleed, click-to-play video, docked status bar
+    BrokenReality.tsx           3 · split narrative, clip-path wipe + parallax
+    InsightDrift.tsx            4 · pinned card drift → bottleneck banner
+    PinnedCanvas.tsx            5 · 300vh living canvas + floating feature pills
     TradeoffGrid.tsx            6 · asymmetric cards with mono counters
     ProofStats.tsx              7 · count-up stats + honest callout
-    Finale.tsx                  8 · ask, milestone, QR, thank-you
+    Finale.tsx                  8 · ask, milestone, QR, thank-you (+ confetti burst)
 ```
 
 ## Motion spec (from the Whisper audit)
@@ -65,7 +77,7 @@ components/story/
 
 Palette: blue `#264ed0` · sky `#5dadeb` · yellow `#ffd301` · red `#c23b21` · charcoal `#333333` · black `#131313`, plus white. Tokens live in `app/globals.css`.
 
-- **Grounds:** black (arrival) → white (chapters 2–7) → blue (finale). Text flips between white and black to match.
+- **Grounds:** black (arrival, demo) → white (chapters 3–7) → blue (finale). Text flips between white and black to match.
 - **Yellow and sky are never text colours.** They are used as fills: the highlighter, the scroll cue, icon tiles, the lit insight card, the demo play button. Any text on them is black.
 - Red, blue and charcoal carry text colour on white (the trade-off counters).
 
