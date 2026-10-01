@@ -1,4 +1,4 @@
-# Web Story Template
+# Hackathon Web Presentation Template
 
 **A scrolling pitch page for hackathon teams.** Fill in one file and you get a story site you can share as a link, which also works as a slide deck on stage.
 
