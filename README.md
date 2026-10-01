@@ -2,6 +2,8 @@
 
 **A scrolling pitch page for hackathon teams.** Fill in one file and you get a story site you can share as a link, which also works as a slide deck on stage.
 
+**Preview available [here](https://ppt-template-theta.vercel.app/).**
+
 > **Best viewed in Firefox.** Animations are smoothest there, so present from Firefox when you can.
 
 ---
