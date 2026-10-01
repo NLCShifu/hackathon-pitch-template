@@ -148,14 +148,15 @@ body {
   }
 
   /* ── Fixed background stack (Whisper `.story-ground`) ──────────────────── */
+  /* Softness comes from wide gradient falloffs, not `filter: blur()`: a 54px blur
+     over a full-screen layer cost Chrome up to ~100ms per frame while scrolling. */
   .ground-mesh {
     inset: -80px;
-    filter: blur(54px);
     background:
-      radial-gradient(1100px 800px at 10% 6%, #264ed02e 0%, #0000 55%),
-      radial-gradient(900px 900px at 40% 118%, #0b0b0b 0%, #0000 60%),
-      radial-gradient(1000px 700px at 86% 16%, #333333 0%, #0000 55%),
-      radial-gradient(760px 760px at 100% 96%, #c23b211c 0%, #0000 55%),
+      radial-gradient(1240px 940px at 10% 6%, #264ed02e 0%, #264ed014 30%, #0000 68%),
+      radial-gradient(1040px 1040px at 40% 118%, #0b0b0b 0%, #0b0b0b99 30%, #0000 72%),
+      radial-gradient(1140px 840px at 86% 16%, #333333 0%, #33333399 30%, #0000 68%),
+      radial-gradient(900px 900px at 100% 96%, #c23b211c 0%, #c23b210c 30%, #0000 68%),
       linear-gradient(116deg, #0f0f0f 0%, #1c1c1c 44%, #131313 100%);
   }
   .ground-streaks {
