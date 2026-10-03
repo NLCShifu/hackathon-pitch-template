@@ -30,7 +30,7 @@ export function Finale({ ref }: { ref?: Ref<HTMLElement> }) {
   return (
     <section id="story-ask" ref={ref} data-chapter className="relative z-[1] px-6 pt-[20svh] pb-12 md:px-12">
       <div className="mx-auto max-w-[1240px]">
-        <ChapterMark n={7} />
+        <ChapterMark n={8} />
         <Beat n={0}>
           <RevealWords as="h2" text={finale.headline} className="story-line t-hero mt-6 max-w-[16ch]" duration={1} />
         </Beat>

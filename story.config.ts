@@ -7,7 +7,8 @@
  *    swap in your copy, e.g. "[USER] SHOULD…" → "{Night nurses} SHOULD…".
  *    Use it sparingly: one key phrase per headline reads best.
  *  • Media: drop files in /public and set e.g. image: "/problem.jpg".
- *    .mp4 / .webm paths render as muted autoplay loops.
+ *    .mp4 / .webm paths render as muted autoplay loops (except demo.video,
+ *    which waits for a click and plays with sound).
  * ─────────────────────────────────────────────────────────────────────────
  */
 import { Gauge, Globe, Quote, TriangleAlert } from "lucide-react";
@@ -24,6 +25,7 @@ export const story = {
     problem: ["EMPLOYEES"],
     insight: ["ANOTHER HR CHATBOT", "TRUST"],
     product: ["HYLITE"],
+    demo: [],
     tradeoffs: ["ON PURPOSE", "WE BUILT", "WE DID NOT BUILD", "BECAUSE"],
     proof: ["PROTOTYPE"],
     finale: ["ANSWERS YOU CAN CITE"],
@@ -77,7 +79,17 @@ export const story = {
     ],
   },
 
-  /* 5 ─ Intentional trade-offs */
+  /* 5 ─ Proof in motion (right after you name the product) */
+  demo: {
+    action: "WATCH THE DEMO",
+    frameLabel: "[LARGE DEMO SCREENSHOT / VIDEO STILL]",
+    image: "", // poster still shown before playback, e.g. "/demo.png"
+    // Plays with sound when the frame is clicked; click again to pause.
+    video: "/demo.mp4",
+    plan: "", // optional caption bar under the demo; empty = hidden
+  },
+
+  /* 6 ─ Intentional trade-offs */
   tradeoffs: {
     headline: "WE MADE THESE TRADE-OFFS ON PURPOSE.",
     cards: [
@@ -100,7 +112,7 @@ export const story = {
     tech: "Node.js + React, one shared TypeScript API.",
   },
 
-  /* 6 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
+  /* 7 ─ Verified reality. Numeric values ("128", "3.4s", "92%") count up; bracketed ones fade in. */
   proof: {
     headline: "WHAT OUR PROTOTYPE DOES TODAY.",
     stats: [
@@ -112,7 +124,7 @@ export const story = {
       "Type a question, get ranked quotes from your documents with the answer highlighted.",
   },
 
-  /* 7 ─ Horizon & the ask */
+  /* 8 ─ Horizon & the ask */
   finale: {
     headline: "WE ARE TURNING HR GUESSWORK INTO ANSWERS YOU CAN CITE.",
     ask: "THE ASK: A COMPANY TO TEST HYLITE ON ITS REAL HR DOCUMENTS.",
@@ -133,7 +145,7 @@ export const story = {
     smoothing: "lenis" as "lenis" | "scrub",
     lenis: { lerp: 0.1, wheelMultiplier: 1 },
     // Extra scroll distance each pinned chapter holds the screen, in vh.
-    pin: { hero: 110, insight: 190, canvas: 300 },
+    pin: { hero: 110, insight: 190, canvas: 300, demo: 220 },
   },
 };
 

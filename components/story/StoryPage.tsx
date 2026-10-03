@@ -9,6 +9,7 @@ import { useScrub } from "./motion";
 import { DeckProvider, usePresentation } from "./Presentation";
 import { SmoothScroll } from "./SmoothScroll";
 import { BrokenReality } from "./sections/BrokenReality";
+import { DemoFrame } from "./sections/DemoFrame";
 import { Finale } from "./sections/Finale";
 import { HeroIntro } from "./sections/HeroIntro";
 import { InsightDrift } from "./sections/InsightDrift";
@@ -22,6 +23,7 @@ const CHAPTERS: Chapter[] = [
   { id: "story-problem", label: "Reality" },
   { id: "story-insight", label: "Insight" },
   { id: "story-product", label: "The bet" },
+  { id: "story-demo", label: "Demo" },
   { id: "story-tradeoffs", label: "Trade-offs" },
   { id: "story-proof", label: "Proof" },
   { id: "story-ask", label: "The ask" },
@@ -78,6 +80,9 @@ export function StoryPage() {
           </Highlights>
           <Highlights phrases={hl.product}>
             <PinnedCanvas />
+          </Highlights>
+          <Highlights phrases={hl.demo}>
+            <DemoFrame />
           </Highlights>
           <Highlights phrases={hl.tradeoffs}>
             <TradeoffGrid />

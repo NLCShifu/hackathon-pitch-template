@@ -16,7 +16,7 @@ export function ProofStats() {
   return (
     <section id="story-proof" data-chapter className="relative z-[1] px-6 py-[16svh] md:px-12">
       <div className="mx-auto max-w-[1240px]">
-        <ChapterMark n={6} />
+        <ChapterMark n={7} />
         <Beat n={0}>
           <RevealWords as="h2" text={proof.headline} className="story-line t-display mt-6 max-w-[18ch]" duration={0.9} />
         </Beat>
